@@ -57,7 +57,7 @@ public class DriverControl extends OpMode { // this is where we start the functi
         //FrontLeft.setDirection(DcMotor.Direction.REVERSE);
         BackRight.setDirection(DcMotor.Direction.REVERSE);
         //BackLeft.setDirection(DcMotor.Direction.REVERSE);
-        Winch.setDirection(DcMotor.Direction.REVERSE);
+        //Winch.setDirection(DcMotor.Direction.REVERSE);
 
         FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

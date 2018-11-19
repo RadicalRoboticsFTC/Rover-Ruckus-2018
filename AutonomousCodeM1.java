@@ -60,7 +60,7 @@ public class AutonomousCodeM1 extends LinearOpMode { // defines the function
         LeftMarker.setPosition(.7);
 
         Arm.setTargetPosition(900); //step 1: lands on field
-        Arm.setPower(.05);
+        Arm.setPower(.5);
         Winch.setPower(-1);
         while (Arm.getCurrentPosition() < Arm.getTargetPosition()) {
 

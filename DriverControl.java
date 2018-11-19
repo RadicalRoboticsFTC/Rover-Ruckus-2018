@@ -85,7 +85,7 @@ public class DriverControl extends OpMode { // this is where we start the functi
         telemetry.addData("Winch Encoder", Winch.getCurrentPosition());
 
         if (gamepad1.dpad_up) { // checks if where motor is where it needs to be
-            Arm.setPower(.3); // sets power the motor should turn
+            Arm.setPower(-.3); // sets power the motor should turn
             Winch.setPower(1);
         } else {
             Arm.setPower(0); // sets power the motor should turn
@@ -93,7 +93,7 @@ public class DriverControl extends OpMode { // this is where we start the functi
         }
 
         if (gamepad1.dpad_down) { // checks if where motor is where it needs to be
-            Arm.setPower(-.3); // sets power the motor should turn
+            Arm.setPower(.3); // sets power the motor should turn
             Winch.setPower(-1);
         } else {
             Arm.setPower(0); // sets power the motor should turn

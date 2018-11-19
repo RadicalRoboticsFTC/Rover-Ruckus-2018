@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServoImplEx;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -27,6 +28,8 @@ public class DriverControl extends OpMode { // this is where we start the functi
     private DcMotor Winch;
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
     private TFObjectDetector tfod;
+    private static Servo LeftMarker;
+    private static DistanceSensor Dsense;
     //private ColorSensor colorSensor;
 
     double fr; // defining variables part 2
@@ -46,6 +49,8 @@ public class DriverControl extends OpMode { // this is where we start the functi
         BackLeft = (DcMotor) hardwareMap.get("BackLeft");
         Arm = (DcMotor) hardwareMap.get("Arm");
         Winch = (DcMotor) hardwareMap.get("Winch");
+        LeftMarker = (Servo) hardwareMap.get("LeftMarker");
+        Dsense = (DistanceSensor) hardwareMap.get("Dsense");
         //colorSensor = (ColorSensor) hardwareMap.get("Pha");
 
         FrontRight.setDirection(DcMotor.Direction.REVERSE); // this is where we set modes our code can execute in
@@ -75,21 +80,20 @@ public class DriverControl extends OpMode { // this is where we start the functi
 
     @Override
     public void loop(){ // a bunch of logic when the code should execute
-        Arm.setTargetPosition(560); // sets the max position a motor can turn
         telemetry.addData("FrontLeft Encoder", FrontLeft.getCurrentPosition()); // assigns encoders to parts
         telemetry.addData("Arm Encoder", Arm.getCurrentPosition());
         telemetry.addData("Winch Encoder", Winch.getCurrentPosition());
 
-        if (Arm.getCurrentPosition() < Arm.getTargetPosition() && gamepad1.dpad_up) { // checks if where motor is where it needs to be
-            Arm.setPower(.2); // sets power the motor should turn
+        if (gamepad1.dpad_up) { // checks if where motor is where it needs to be
+            Arm.setPower(.3); // sets power the motor should turn
             Winch.setPower(1);
         } else {
             Arm.setPower(0); // sets power the motor should turn
             Winch.setPower(0);
         }
-        Winch.setTargetPosition(-560);
-        if (Winch.getCurrentPosition() < Winch.getTargetPosition() && gamepad1.dpad_down) { // checks if where motor is where it needs to be
-            Arm.setPower(-.2); // sets power the motor should turn
+
+        if (gamepad1.dpad_down) { // checks if where motor is where it needs to be
+            Arm.setPower(-.3); // sets power the motor should turn
             Winch.setPower(-1);
         } else {
             Arm.setPower(0); // sets power the motor should turn
@@ -97,12 +101,13 @@ public class DriverControl extends OpMode { // this is where we start the functi
         }
 
         if (gamepad1.x) { // links controllers to commands the code should execute
-        } else if(gamepad1.y){
+            LeftMarker.setPosition(1);
         }
-
-        if (gamepad1.dpad_right) { // links controllers to commands the code should execute
-        } else if (gamepad1.dpad_left) {
-        } else if (gamepad1.dpad_down) {
+        if (gamepad1.b) { // links controllers to commands the code should execute
+            LeftMarker.setPosition(0);
+        }
+        if (gamepad1.a) { // links controllers to commands the code should execute
+            LeftMarker.setPosition(.7);
         }
 
         if (gamepad1.right_bumper) { // links controllers to commands the code should execute
@@ -113,9 +118,6 @@ public class DriverControl extends OpMode { // this is where we start the functi
             power = .25;
         } else {
             power = 1;
-        }
-
-        if (gamepad1.dpad_left) { // links controllers to commands the code should execute
         }
 
         double gamepad1LeftY = gamepad1.left_stick_y * power; // assigns variables to inputs
@@ -131,6 +133,8 @@ public class DriverControl extends OpMode { // this is where we start the functi
         FrontLeft.setPower(fr);
         BackRight.setPower(br);
         BackLeft.setPower(bl);
+
+        telemetry.addData("Distance Sensor", Dsense);
 
         List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
         if (updatedRecognitions != null) {

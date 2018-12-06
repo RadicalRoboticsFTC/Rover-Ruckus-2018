@@ -15,7 +15,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
 
-@TeleOp(name="Driver Control", group="Iterative Opmode")
+@TeleOp(name="Driver Control Advanced", group="Iterative Opmode")
 public class DriverControlAdvanced extends OpMode { // this is where we start the function
     private DcMotor FrontRight; // this is where we define the variables
     private DcMotor FrontLeft;
@@ -23,11 +23,11 @@ public class DriverControlAdvanced extends OpMode { // this is where we start th
     private DcMotor BackLeft;
     private DcMotor Arm;
     private DcMotor Winch;
-    private DcMotor leftLauncher;
-    private DcMotor rightLauncher;
+    /*private DcMotor leftLauncher;
+    private DcMotor rightLauncher;*/
     private static Servo LeftMarker;
-    private static CRServo Intake;
-    private static CRServo Transport;
+    /*private static CRServo Intake;
+    private static CRServo Transport;*/
     private static DistanceSensor Dsense;
     private ColorSensor colorSensor;
 
@@ -43,7 +43,7 @@ public class DriverControlAdvanced extends OpMode { // this is where we start th
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
     private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
-    private static final String VUFORIA_KEY = " -- YOUR NEW VUFORIA KEY GOES HERE  --- ";
+    private static final String VUFORIA_KEY = "Afnkb5f/////AAABmb1XgEVr1EQGsetwYZoS+QaEBPHQo9TktUc5pi0vCbPLQ/gjC3zvMXbGlqlvU7sPRxW8LA0x/1mlOkSwTMES0IxHqKA0myhnTALjbfuVVQOjcknwtwdo7B6KgKIRt/EIsVRUcE8gdsJlpl+CB1oWejQT/67qMpZhyR/nPlqyMklcGrR4IGfmaPTO3DVACenXmOnaSK+EWUEG3uPnOPV9O88JoTnP46ZbBKeLIw6E6Zr+f7DJby1w8g10f04a2TBt5WL9Ya3/6X1eWScJwh08uTWWIbnH+ny+ckkp2PY4Ss+Kbel7x3TadkgiX75+bypUwHP+fN7Na1qQMXkAvgyhGOKQm8ONW3iK4eRh6F/cW06+";
     private VuforiaLocalizer vuforia;
     private TFObjectDetector tfod;
 
@@ -58,10 +58,10 @@ public class DriverControlAdvanced extends OpMode { // this is where we start th
         LeftMarker = (Servo) hardwareMap.get("LeftMarker");
         Dsense = (DistanceSensor) hardwareMap.get("Dsense");
         colorSensor = (ColorSensor) hardwareMap.get("Pha");
-        Intake = (CRServo) hardwareMap.get("Intake");
-        Transport = (CRServo) hardwareMap.get("Transport");
-        leftLauncher = (DcMotor) hardwareMap.get("leftLauncher");
-        rightLauncher = (DcMotor) hardwareMap.get("rightLauncher");
+        /*Intake = (CRServo) hardwareMap.get("Intake");
+        Transport = (CRServo) hardwareMap.get("Transport");*/
+        /*leftLauncher = (DcMotor) hardwareMap.get("leftLauncher");
+        rightLauncher = (DcMotor) hardwareMap.get("rightLauncher");*/
 
         FrontRight.setDirection(DcMotor.Direction.REVERSE);
         BackRight.setDirection(DcMotor.Direction.REVERSE);
@@ -74,10 +74,19 @@ public class DriverControlAdvanced extends OpMode { // this is where we start th
         Arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Winch.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        initVuforia();
+
+        if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
+            initTfod();
+        } else {
+            telemetry.addData("Sorry!", "This device is not compatible with TFOD");
+        }
+
     }
 
     @Override
     public void init_loop() { // a bunch of logic when the code should execute
+
     }
 
     @Override
@@ -86,28 +95,33 @@ public class DriverControlAdvanced extends OpMode { // this is where we start th
 
 
     @Override
-    public void loop(){ // a bunch of logic when the code should execute
+    public void loop() { // a bunch of logic when the code should execute
         telemetry.addData("FrontLeft Encoder", FrontLeft.getCurrentPosition()); // assigns encoders to parts
         telemetry.addData("Arm Encoder", Arm.getCurrentPosition());
         telemetry.addData("Winch Encoder", Winch.getCurrentPosition());
 
-        if (gamepad1.dpad_up) { // checks if where motor is where it needs to be
-            Arm.setPower(-.3); // sets power the motor should turn
-            Winch.setPower(1);
-        } else {
+        if (gamepad1.dpad_up == false) { // checks if where motor is where it needs to be
             Arm.setPower(0); // sets power the motor should turn
             Winch.setPower(0);
+        } else {
+            Arm.setPower(.2); // sets power the motor should turn
+            Winch.setPower(1.0);
         }
 
-        if (gamepad1.dpad_down) { // checks if where motor is where it needs to be
-            Arm.setPower(.3); // sets power the motor should turn
+        if (!gamepad1.dpad_down) { // checks if where motor is where it needs to be
+            Arm.setPower(0); // sets power the motor should turn
+            Winch.setPower(0);
+        } else {
+            Arm.setPower(-.3); // sets power the motor should turn
+            Winch.setPower(-1);
+        }
+        if (gamepad1.dpad_left) {
             Winch.setPower(-1);
         } else {
-            Arm.setPower(0); // sets power the motor should turn
             Winch.setPower(0);
         }
 
-        while (gamepad1.x) { // links controllers to commands the code should execute
+        /*while (gamepad1.x) { // links controllers to commands the code should execute
             //sense gold mineral
             //collect gold mineral
             //transport mineral to launcher while collecting other mineral
@@ -173,7 +187,7 @@ public class DriverControlAdvanced extends OpMode { // this is where we start th
         if (gamepad1.y) { // links controllers to commands the code should execute
             Intake.setPower(1.0);
             Transport.setPower(1.0);
-        }
+        }*/
 
         if (gamepad1.right_bumper) { // links controllers to commands the code should execute
         } else {
@@ -189,7 +203,7 @@ public class DriverControlAdvanced extends OpMode { // this is where we start th
         double gamepad1LeftX = gamepad1.left_stick_x * power;
         double gamepad1RightX = gamepad1.right_stick_x * power;
 
-        double fl = gamepad1LeftY + gamepad1LeftX + gamepad1RightX; // controller logic nightmare scary
+        double fl = gamepad1LeftY + gamepad1LeftX + gamepad1RightX; //controller logic nightmare scary
         double fr = gamepad1LeftY - gamepad1LeftX - gamepad1RightX; //back left
         double br = gamepad1LeftY - gamepad1LeftX + gamepad1RightX; //back right
         double bl = gamepad1LeftY + gamepad1LeftX - gamepad1RightX;
@@ -202,57 +216,61 @@ public class DriverControlAdvanced extends OpMode { // this is where we start th
         telemetry.addData("Distance Sensor", Dsense);
         telemetry.addData("Color Senser Data: ", colorSensor);
 
-        initVuforia();
 
-        if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
-            initTfod();
-        } else {
-            telemetry.addData("Sorry!", "This device is not compatible with TFOD");
+
+
+
+        /** Wait for the game to begin */
+        telemetry.addData(">", "Press Play to start tracking");
+        telemetry.update();
+        if (tfod != null) {
+            tfod.activate();
         }
 
-        /* Wait for the game to begin */
-        /*telemetry.addData(">", "Press Play to start tracking");
-        telemetry.update();*/
 
-        if (tfod != null) {
-            // getUpdatedRecognitions() will return null if no new information is available since
-            // the last time that call was made.
-            List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-            if (updatedRecognitions != null) {
-                telemetry.addData("# Object Detected", updatedRecognitions.size());
-                if (updatedRecognitions.size() == 3) {
-                    int goldMineralX = -1;
-                    int silverMineral1X = -1;
-                    int silverMineral2X = -1;
-                    for (Recognition recognition : updatedRecognitions) {
-                        if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
-                            goldMineralX = (int) recognition.getLeft();
-                        } else if (silverMineral1X == -1) {
-                            silverMineral1X = (int) recognition.getLeft();
-                        } else {
-                            silverMineral2X = (int) recognition.getLeft();
+        while (1==1){
+            if (tfod != null) {
+                // getUpdatedRecognitions() will return null if no new information is available since
+                // the last time that call was made.
+                List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+                if (updatedRecognitions != null) {
+                    telemetry.addData("# Object Detected", updatedRecognitions.size());
+                    if (updatedRecognitions.size() == 3) {
+                        int goldMineralX = -1;
+                        int silverMineral1X = -1;
+                        int silverMineral2X = -1;
+                        for (Recognition recognition : updatedRecognitions) {
+                            if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
+                                goldMineralX = (int) recognition.getLeft();
+                            } else if (silverMineral1X == -1) {
+                                silverMineral1X = (int) recognition.getLeft();
+                            } else {
+                                silverMineral2X = (int) recognition.getLeft();
+                            }
+                        }
+                        if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
+                            if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
+                                telemetry.addData("Gold Mineral Position", "Left");
+                            } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
+                                telemetry.addData("Gold Mineral'" +
+                                        "l Position", "Right");
+                            } else {
+                                telemetry.addData("Gold Mineral Position", "Center");
+                            }
                         }
                     }
-                    if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
-                        if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
-                            telemetry.addData("Gold Mineral Position", "Left");
-                        } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
-                            telemetry.addData("Gold Mineral Position", "Right");
-                        } else {
-                            telemetry.addData("Gold Mineral Position", "Center");
-                        }
-                    }
+                    telemetry.update();
                 }
-                telemetry.update();
             }
         }
 
 
-
-        if (tfod != null) {
+        /*if (tfod != null) {
             tfod.shutdown();
-        }
+        }*/
     }
+
+
     private void initVuforia() {
         /*
          * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.

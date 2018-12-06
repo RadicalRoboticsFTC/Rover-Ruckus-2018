@@ -18,8 +18,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Came
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
-@TeleOp(name="Driver Control", group="Iterative Opmode")
-public class DriverControl extends OpMode { // this is where we start the function
+@TeleOp(name="Driver Control Test", group="Iterative Opmode")
+public class DriverControlTest extends OpMode { // this is where we start the function
     private DcMotor FrontRight; // this is where we define the variables
     private DcMotor FrontLeft;
     private DcMotor BackRight;
@@ -27,9 +27,9 @@ public class DriverControl extends OpMode { // this is where we start the functi
     private DcMotor Arm;
     private DcMotor Winch;
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
-    //private TFObjectDetector tfod;
+    private TFObjectDetector tfod;
     private static Servo LeftMarker;
-    private static DistanceSensor Dsense;
+    //private static DistanceSensor Dsense;
     //private ColorSensor colorSensor;
 
     double fr; // defining variables part 2
@@ -50,14 +50,14 @@ public class DriverControl extends OpMode { // this is where we start the functi
         Arm = (DcMotor) hardwareMap.get("Arm");
         Winch = (DcMotor) hardwareMap.get("Winch");
         LeftMarker = (Servo) hardwareMap.get("LeftMarker");
-        Dsense = (DistanceSensor) hardwareMap.get("Dsense");
+        //Dsense = (DistanceSensor) hardwareMap.get("Dsense");
         //colorSensor = (ColorSensor) hardwareMap.get("Pha");
 
         FrontRight.setDirection(DcMotor.Direction.REVERSE); // this is where we set modes our code can execute in
         //FrontLeft.setDirection(DcMotor.Direction.REVERSE);
         BackRight.setDirection(DcMotor.Direction.REVERSE);
         //BackLeft.setDirection(DcMotor.Direction.REVERSE);
-        Arm.setDirection(DcMotor.Direction.REVERSE);
+        //Winch.setDirection(DcMotor.Direction.REVERSE);
 
         FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -84,24 +84,19 @@ public class DriverControl extends OpMode { // this is where we start the functi
         telemetry.addData("Arm Encoder", Arm.getCurrentPosition());
         telemetry.addData("Winch Encoder", Winch.getCurrentPosition());
 
-        if (gamepad1.dpad_up == false) { // checks if where motor is where it needs to be
+        if (gamepad1.dpad_up) { // checks if where motor is where it needs to be
+            Arm.setPower(-.3); // sets power the motor should turn
+            Winch.setPower(1);
+        } else {
             Arm.setPower(0); // sets power the motor should turn
             Winch.setPower(0);
-        } else {
-            Arm.setPower(.2); // sets power the motor should turn
-            Winch.setPower(1.0);
         }
 
-        if (!gamepad1.dpad_down) { // checks if where motor is where it needs to be
+        if (gamepad1.dpad_down) { // checks if where motor is where it needs to be
+            Arm.setPower(.3); // sets power the motor should turn
+            Winch.setPower(-1);
+        } else {
             Arm.setPower(0); // sets power the motor should turn
-            Winch.setPower(0);
-        } else {
-            Arm.setPower(-.3); // sets power the motor should turn
-            Winch.setPower(-1);
-        }
-        if (gamepad1.dpad_left) {
-            Winch.setPower(-1);
-        } else {
             Winch.setPower(0);
         }
 
@@ -139,9 +134,9 @@ public class DriverControl extends OpMode { // this is where we start the functi
         BackRight.setPower(br);
         BackLeft.setPower(bl);
 
-        //telemetry.addData("Distance Sensor", Dsense);
+       // telemetry.addData("Distance Sensor", Dsense);
 
-        /*List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+        List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
         if (updatedRecognitions != null) {
             telemetry.addData("# Object Detected", updatedRecognitions.size());
             if (updatedRecognitions.size() == 3) {
@@ -168,6 +163,7 @@ public class DriverControl extends OpMode { // this is where we start the functi
                 }
             }
             telemetry.update();
-        }*/
+        }
+
     }
 }

@@ -44,15 +44,13 @@ public class AutonomousCode2 extends LinearOpMode { // defines the function
 
         FrontLeft.setDirection(DcMotor.Direction.REVERSE);
         BackLeft.setDirection(DcMotor.Direction.REVERSE);
-        //Arm.setDirection(DcMotor.Direction.REVERSE);
+        Arm.setDirection(DcMotor.Direction.REVERSE);
 
         waitForStart(); //this autonomous faces the crater
 
-
-
-        Arm.setTargetPosition(900); //step 1: land
-        Arm.setPower(.05);
-        Winch.setPower(-1);
+        Arm.setTargetPosition(600); //step 1: land
+        Arm.setPower(.3);
+        Winch.setPower(1);
         while(Arm.getCurrentPosition() < Arm.getTargetPosition()) {
 
         }
@@ -60,9 +58,21 @@ public class AutonomousCode2 extends LinearOpMode { // defines the function
         Arm.setPower(0);
         Winch.setPower(0);
 
-        sleep(1000);
+        FrontLeft.setTargetPosition(50);//step 2: moves forward to detach off of the hook
+        FrontLeft.setPower(.5);
+        FrontRight.setPower(-.5);
+        BackLeft.setPower(-.5);
+        BackRight.setPower(.5);
+        while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
 
-        FrontLeft.setTargetPosition(170); //step 2: drives off latch
+        }
+
+        FrontLeft.setPower(0);
+        FrontRight.setPower(0);
+        BackLeft.setPower(0);
+        BackLeft.setPower(0);
+
+        FrontLeft.setTargetPosition(230); //step 2: drives off latch
         FrontLeft.setPower(.5);
         FrontRight.setPower(.5);
         BackLeft.setPower(.5);
@@ -76,7 +86,7 @@ public class AutonomousCode2 extends LinearOpMode { // defines the function
         BackLeft.setPower(0);
         BackLeft.setPower(0);
 
-        FrontLeft.setTargetPosition(-1000); //step 3: turns to right mineral on field
+        FrontLeft.setTargetPosition(-950); //step 3: turns to right mineral on field
         FrontLeft.setPower(-1);
         FrontRight.setPower(1);
         BackLeft.setPower(-1);
@@ -91,7 +101,7 @@ public class AutonomousCode2 extends LinearOpMode { // defines the function
 
         sleep(1000);
 
-        FrontLeft.setTargetPosition(800); //step 4; drives forward to knock off mineral
+        FrontLeft.setTargetPosition(850); //step 4; drives forward to knock off mineral
         FrontLeft.setPower(1);
         FrontRight.setPower(1);
         BackLeft.setPower(1);
@@ -107,7 +117,7 @@ public class AutonomousCode2 extends LinearOpMode { // defines the function
 
         sleep(1000);
 
-        FrontLeft.setTargetPosition(500); //step 5: drives backwards to not knock off other minerals
+        FrontLeft.setTargetPosition(550); //step 5: drives backwards to not knock off other minerals
         FrontLeft.setPower(-1);
         FrontRight.setPower(-1);
         BackLeft.setPower(-1);
@@ -123,7 +133,7 @@ public class AutonomousCode2 extends LinearOpMode { // defines the function
 
         sleep(1000);
 
-        FrontLeft.setTargetPosition(-1750); //step 6: turns to the left to head to team marker drop zone
+        FrontLeft.setTargetPosition(-1700); //step 6: turns to the left to head to team marker drop zone
         // Ticks per rotation = 1120
         FrontLeft.setPower(-1);
         FrontRight.setPower(1);
@@ -140,7 +150,7 @@ public class AutonomousCode2 extends LinearOpMode { // defines the function
 
         sleep(1000);
 
-        FrontLeft.setTargetPosition(1950); // step 7: drives forward
+        FrontLeft.setTargetPosition(1900); // step 7: drives forward
         FrontLeft.setPower(1);
         FrontRight.setPower(.9);
         BackLeft.setPower(1);
@@ -154,7 +164,7 @@ public class AutonomousCode2 extends LinearOpMode { // defines the function
         BackLeft.setPower(0);
         BackRight.setPower(0);
 
-        FrontLeft.setTargetPosition(1600); //step 8: turns directly towards team marker drop zone
+        FrontLeft.setTargetPosition(1650); //step 8: turns directly towards team marker drop zone
         FrontLeft.setPower(-1);
         FrontRight.setPower(1);
         BackLeft.setPower(-1);
@@ -168,7 +178,7 @@ public class AutonomousCode2 extends LinearOpMode { // defines the function
         BackLeft.setPower(0);
         BackRight.setPower(0);
 
-        FrontLeft.setTargetPosition(5200); // drives to drop zone
+        FrontLeft.setTargetPosition(5250); // drives to drop zone
         FrontLeft.setPower(1);
         FrontRight.setPower(.85);
         BackLeft.setPower(1);
@@ -184,7 +194,7 @@ public class AutonomousCode2 extends LinearOpMode { // defines the function
 
         LeftMarker.setPosition(0); //drops marker
 
-        FrontLeft.setTargetPosition(-1080); //drives backwards to park
+        FrontLeft.setTargetPosition(-1030); //drives backwards to park
         FrontLeft.setPower(-1);
         FrontRight.setPower(-.85);
         BackLeft.setPower(-1);

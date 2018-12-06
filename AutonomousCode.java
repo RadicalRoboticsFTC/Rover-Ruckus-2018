@@ -39,23 +39,54 @@ public class AutonomousCode extends LinearOpMode { // defines the function
 
         FrontLeft.setDirection(DcMotor.Direction.REVERSE);
         BackLeft.setDirection(DcMotor.Direction.REVERSE);
+        /*Winch.setDirection(DcMotor.Direction.REVERSE);*/
+        Arm.setDirection(DcMotor.Direction.REVERSE);
 
 
         waitForStart(); // This autonomous faces the team marker drop zone
 
-
-        Arm.setTargetPosition(900); //step 1: lands on field
-        Arm.setPower(.05);
-        Winch.setPower(-1);
+        Arm.setTargetPosition(600); //step 1: lands on field
+        Arm.setPower(.03);
+        Winch.setPower(1);
         while (Arm.getCurrentPosition() < Arm.getTargetPosition()) {
 
         }
 
         Arm.setPower(0);
-        Winch.setPower(0);
+
+        sleep(2000);
+
+        FrontLeft.setTargetPosition(150);//step 2: moves forward to detach off of the hook
+        FrontLeft.setPower(.5);
+        FrontRight.setPower(-.5);
+        BackLeft.setPower(-.5);
+        BackRight.setPower(.5);
+        while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
+
+        }
+        FrontLeft.setPower(0);
+        FrontRight.setPower(0);
+        BackLeft.setPower(0);
+        BackLeft.setPower(0);
+        
+
+        FrontLeft.setTargetPosition(50);//step 2: moves forward to detach off of the hook
+        FrontLeft.setPower(-.5);
+        FrontRight.setPower(.5);
+        BackLeft.setPower(-.5);
+        BackRight.setPower(.5);
+        while (FrontLeft.getCurrentPosition() > FrontLeft.getTargetPosition()) {
+
+        }
+        FrontLeft.setPower(0);
+        FrontRight.setPower(0);
+        BackLeft.setPower(0);
+        BackLeft.setPower(0);
+
+        sleep(2000);
 
 
-        FrontLeft.setTargetPosition(170);//step 2: moves forward to detach off of the hook
+        FrontLeft.setTargetPosition(230);//step 2: moves forward to detach off of the hook
         FrontLeft.setPower(.5);
         FrontRight.setPower(.5);
         BackLeft.setPower(.5);
@@ -69,7 +100,7 @@ public class AutonomousCode extends LinearOpMode { // defines the function
         BackLeft.setPower(0);
         BackLeft.setPower(0);
 
-        FrontLeft.setTargetPosition(-1800); //step 3: turns toward the taped off corner
+        FrontLeft.setTargetPosition(-1150); //step 3: turns toward the taped off corner
         FrontLeft.setPower(-1);
         FrontRight.setPower(1);
         BackLeft.setPower(-1);
@@ -77,14 +108,13 @@ public class AutonomousCode extends LinearOpMode { // defines the function
         while (FrontLeft.getCurrentPosition() > FrontLeft.getTargetPosition()) {
 
         }
-
         FrontLeft.setPower(0);
         FrontRight.setPower(0);
         BackLeft.setPower(0);
         BackRight.setPower(0);
 
 
-        FrontLeft.setTargetPosition(2950); //step 4: moves towards taped corner
+        FrontLeft.setTargetPosition(3000); //step 4: moves towards taped corner
         FrontLeft.setPower(1);
         FrontRight.setPower(.85);
         BackLeft.setPower(1);
@@ -100,7 +130,7 @@ public class AutonomousCode extends LinearOpMode { // defines the function
 
         LeftMarker.setPosition(0);
 
-        FrontLeft.setTargetPosition(2650); //step 5: backs up to not crush team marker
+        FrontLeft.setTargetPosition(2950); //step 5: backs up to not crush team marker
         FrontLeft.setPower(-1);
         FrontRight.setPower(-.87);
         BackLeft.setPower(-1);
@@ -128,7 +158,7 @@ public class AutonomousCode extends LinearOpMode { // defines the function
         BackLeft.setPower(0);
         BackRight.setPower(0);
 
-        FrontLeft.setTargetPosition(7515); //step 7: move towards crator and parks
+        FrontLeft.setTargetPosition(7415-300); //step 7: move towards crator and parks
         FrontLeft.setPower(1);
         FrontRight.setPower(.85);
         BackLeft.setPower(1);

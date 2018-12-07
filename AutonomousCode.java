@@ -68,7 +68,10 @@ public class AutonomousCode extends LinearOpMode { // defines the function
         FrontRight.setPower(0);
         BackLeft.setPower(0);
         BackLeft.setPower(0);
-        
+
+        FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        sleep(50);
+
 
         FrontLeft.setTargetPosition(50);//step 2: moves forward to detach off of the hook
         FrontLeft.setPower(-.5);
@@ -83,7 +86,9 @@ public class AutonomousCode extends LinearOpMode { // defines the function
         BackLeft.setPower(0);
         BackLeft.setPower(0);
 
-        sleep(2000);
+        FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        sleep(50);
+
 
 
         FrontLeft.setTargetPosition(230);//step 2: moves forward to detach off of the hook
@@ -100,6 +105,10 @@ public class AutonomousCode extends LinearOpMode { // defines the function
         BackLeft.setPower(0);
         BackLeft.setPower(0);
 
+        FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        sleep(50);
+
+
         FrontLeft.setTargetPosition(-1150); //step 3: turns toward the taped off corner
         FrontLeft.setPower(-1);
         FrontRight.setPower(1);
@@ -112,6 +121,9 @@ public class AutonomousCode extends LinearOpMode { // defines the function
         FrontRight.setPower(0);
         BackLeft.setPower(0);
         BackRight.setPower(0);
+
+        FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        sleep(50);
 
 
         FrontLeft.setTargetPosition(3000); //step 4: moves towards taped corner
@@ -127,6 +139,10 @@ public class AutonomousCode extends LinearOpMode { // defines the function
         FrontRight.setPower(0);
         BackLeft.setPower(0);
         BackRight.setPower(0);
+
+        FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        sleep(50);
+
 
         LeftMarker.setPosition(0);
 
@@ -144,6 +160,10 @@ public class AutonomousCode extends LinearOpMode { // defines the function
         BackLeft.setPower(0);
         BackRight.setPower(0);
 
+        FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        sleep(50);
+
+
         FrontLeft.setTargetPosition(955); //step 6: rotates towards crator
         FrontLeft.setPower(-1);
         FrontRight.setPower(1);
@@ -157,6 +177,10 @@ public class AutonomousCode extends LinearOpMode { // defines the function
         FrontRight.setPower(0);
         BackLeft.setPower(0);
         BackRight.setPower(0);
+
+        FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        sleep(50);
+
 
         FrontLeft.setTargetPosition(7415-300); //step 7: move towards crator and parks
         FrontLeft.setPower(1);

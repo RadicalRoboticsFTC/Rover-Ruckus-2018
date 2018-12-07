@@ -40,7 +40,7 @@ public class EncoderResetTest extends LinearOpMode { // defines the function
 
 
         waitForStart();
-        FrontLeft.setTargetPosition(100);
+        FrontLeft.setTargetPosition(150);
         FrontLeft.setPower(1);
         FrontRight.setPower(1);
         BackLeft.setPower(1);
@@ -54,10 +54,10 @@ public class EncoderResetTest extends LinearOpMode { // defines the function
         BackLeft.setPower(0);
         BackRight.setPower(0);
 
-        FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        sleep(5000);
+        FrontLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        sleep(2000);
 
-        FrontLeft.setTargetPosition(50);
+        FrontLeft.setTargetPosition(5000);
         FrontLeft.setPower(1);
         FrontRight.setPower(1);
         BackLeft.setPower(1);

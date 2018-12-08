@@ -32,11 +32,6 @@ public class AutonomousCodeTensorFlowLight extends LinearOpMode { // defines the
     private VuforiaLocalizer vuforia;
     private TFObjectDetector tfod;
 
-
-
-
-
-
     @Override
     public void runOpMode() { // runs code
 

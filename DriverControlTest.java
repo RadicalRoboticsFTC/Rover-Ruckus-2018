@@ -39,8 +39,6 @@ public class DriverControlTest extends OpMode { // this is where we start the fu
     double cl;
     double power;
 
-
-
     @Override
     public void init() {
         FrontRight = (DcMotor) hardwareMap.get("FrontRight"); // this is where we assign parts to variables

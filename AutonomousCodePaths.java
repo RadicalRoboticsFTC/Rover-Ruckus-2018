@@ -21,8 +21,10 @@ public class AutonomousCodePaths extends LinearOpMode { // defines the function
     private static DcMotor Arm;
     private static DcMotor Winch;
     private static Servo LeftMarker;
-    private static String left = "Left";
-    private static String right = "Right";
+    private static String Left = "Left";
+    private static String Right = "Right";
+    private static String left = "left";
+    private static String right = "right";
 
     @Override
     public void runOpMode() { // runs code
@@ -46,12 +48,12 @@ public class AutonomousCodePaths extends LinearOpMode { // defines the function
         FrontLeft.setDirection(DcMotor.Direction.REVERSE);
         BackLeft.setDirection(DcMotor.Direction.REVERSE);
 
-        waitForStart(); /** MIDDLE PATH */
+        waitForStart(); /** AUTO 1 MIDDLE PATH **/
 
         LeftMarker.setPosition(.7);
 
         Arm.setTargetPosition(900);
-        Arm.setPower(.03);
+        Arm.setPower(.1);
         Winch.setPower(1);
         while (Arm.getCurrentPosition() < Arm.getTargetPosition()) {
 
@@ -62,31 +64,33 @@ public class AutonomousCodePaths extends LinearOpMode { // defines the function
 
         strafe("Right", 150);
 
-        turn("Left", 100);
+        turn("Left", -50);
 
         straight(170);
 
-        turn("Left", -1800);
+        turn("Left", -1630);
 
-        straight(2950);
+        straight(1150);
 
         LeftMarker.setPosition(1);
 
-        backwards(2650);
+        backwards(-300);
 
-        turn("Left", 955);
+        turn("Left", 1695);
 
-        straight(7515);
+        straight(6560);
     }
 
-    private static void turn(String direction, int TargetPosition){
-        if(direction.equals(left)){
-            FrontLeft.setTargetPosition(TargetPosition);
+    private void turn(String direction, int TargetPosition){
+
+        FrontLeft.setTargetPosition(TargetPosition);
+
+        if(direction.equals(left) || direction.equals(Left)){
             FrontLeft.setPower(-1);
             FrontRight.setPower(1);
             BackLeft.setPower(-1);
             BackRight.setPower(1);
-            while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
+            while (FrontLeft.getCurrentPosition() > FrontLeft.getTargetPosition()) {
 
             }
 
@@ -94,9 +98,8 @@ public class AutonomousCodePaths extends LinearOpMode { // defines the function
             FrontRight.setPower(0);
             BackLeft.setPower(0);
             BackRight.setPower(0);
-        }
-        if(direction.equals(right)){
-            FrontLeft.setTargetPosition(TargetPosition);
+
+        }else if(direction.equals(right) || direction.equals(Right)){
             FrontLeft.setPower(1);
             FrontRight.setPower(-1);
             BackLeft.setPower(1);
@@ -112,7 +115,10 @@ public class AutonomousCodePaths extends LinearOpMode { // defines the function
         }
     }
 
-    private static void straight(int TargetPosition){
+    private void straight(int TargetPosition){
+
+
+
         FrontLeft.setTargetPosition(TargetPosition);
         FrontLeft.setPower(1);
         FrontRight.setPower(.85);
@@ -128,13 +134,14 @@ public class AutonomousCodePaths extends LinearOpMode { // defines the function
         BackRight.setPower(0);
     }
 
-    private static void backwards(int TargetPosition){
+    private void backwards(int TargetPosition){
+
         FrontLeft.setTargetPosition(TargetPosition); //step 7: move towards crator and parks
         FrontLeft.setPower(-1);
         FrontRight.setPower(-.85);
         BackLeft.setPower(-1);
         BackRight.setPower(-.85);
-        while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
+        while (FrontLeft.getCurrentPosition() > FrontLeft.getTargetPosition()) {
 
         }
 
@@ -144,14 +151,15 @@ public class AutonomousCodePaths extends LinearOpMode { // defines the function
         BackRight.setPower(0);
     }
 
-    private static void strafe(String direction, int TargetPosition){
-        if(direction.equals(left)){
+    private void strafe(String direction, int TargetPosition){
+
+        if(direction.equals(left) || direction.equals(Left)){
             FrontLeft.setTargetPosition(TargetPosition);
             FrontLeft.setPower(-1);
             FrontRight.setPower(.85);
             BackLeft.setPower(1);
             BackRight.setPower(-.85);
-            while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
+            while (FrontLeft.getCurrentPosition() > FrontLeft.getTargetPosition()) {
 
             }
 
@@ -159,13 +167,14 @@ public class AutonomousCodePaths extends LinearOpMode { // defines the function
             FrontRight.setPower(0);
             BackLeft.setPower(0);
             BackRight.setPower(0);
-        }
-        if(direction.equals(right)){
+
+        }else if(direction.equals(right) || direction.equals(Right)){
             FrontLeft.setTargetPosition(TargetPosition);
+
             FrontLeft.setPower(1);
             FrontRight.setPower(-.85);
             BackLeft.setPower(-1);
-            BackRight.setPower(-.85);
+            BackRight.setPower(.85);
             while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
 
             }

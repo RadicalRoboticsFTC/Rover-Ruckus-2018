@@ -22,8 +22,10 @@ public class AutonomousCodeM2 extends LinearOpMode { // defines the function
     private static DcMotor Arm;
     private static DcMotor Winch;
     private static Servo LeftMarker;
-    private static String left = "Left";
-    private static String right = "Right";
+    private static String Left = "Left";
+    private static String Right = "Right";
+    private static String left = "left";
+    private static String right = "right";
 
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
@@ -188,104 +190,9 @@ public class AutonomousCodeM2 extends LinearOpMode { // defines the function
         }
     }
 
-    private static void turn(String direction, int TargetPosition){
-        if(direction.equals(left)){
-            FrontLeft.setTargetPosition(TargetPosition);
-            FrontLeft.setPower(-1);
-            FrontRight.setPower(1);
-            BackLeft.setPower(-1);
-            BackRight.setPower(1);
-            while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
-
-            }
-
-            FrontLeft.setPower(0);
-            FrontRight.setPower(0);
-            BackLeft.setPower(0);
-            BackRight.setPower(0);
-        }
-        if(direction.equals(right)){
-            FrontLeft.setTargetPosition(TargetPosition);
-            FrontLeft.setPower(1);
-            FrontRight.setPower(-1);
-            BackLeft.setPower(1);
-            BackRight.setPower(-1);
-            while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
-
-            }
-
-            FrontLeft.setPower(0);
-            FrontRight.setPower(0);
-            BackLeft.setPower(0);
-            BackRight.setPower(0);
-        }
-    }
-
-    private static void straight(int TargetPosition){
-        FrontLeft.setTargetPosition(TargetPosition);
-        FrontLeft.setPower(1);
-        FrontRight.setPower(.85);
-        BackLeft.setPower(1);
-        BackRight.setPower(.85);
-        while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
-
-        }
-
-        FrontLeft.setPower(0);
-        FrontRight.setPower(0);
-        BackLeft.setPower(0);
-        BackRight.setPower(0);
-    }
-
-    private static void backwards(int TargetPosition){
-        FrontLeft.setTargetPosition(TargetPosition); //step 7: move towards crator and parks
-        FrontLeft.setPower(-1);
-        FrontRight.setPower(-.85);
-        BackLeft.setPower(-1);
-        BackRight.setPower(-.85);
-        while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
-
-        }
-
-        FrontLeft.setPower(0);
-        FrontRight.setPower(0);
-        BackLeft.setPower(0);
-        BackRight.setPower(0);
-    }
-
-    private static void strafe(String direction, int TargetPosition){
-        if(direction.equals(left)){
-            FrontLeft.setTargetPosition(TargetPosition);
-            FrontLeft.setPower(-1);
-            FrontRight.setPower(.85);
-            BackLeft.setPower(1);
-            BackRight.setPower(-.85);
-            while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
-
-            }
-
-            FrontLeft.setPower(0);
-            FrontRight.setPower(0);
-            BackLeft.setPower(0);
-            BackRight.setPower(0);
-        }
-        if(direction.equals(right)){
-            FrontLeft.setTargetPosition(TargetPosition);
-            FrontLeft.setPower(1);
-            FrontRight.setPower(-.85);
-            BackLeft.setPower(-1);
-            BackRight.setPower(-.85);
-            while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
-
-            }
-
-            FrontLeft.setPower(0);
-            FrontRight.setPower(0);
-            BackLeft.setPower(0);
-            BackRight.setPower(0);
-        }
-    }
-
+    /**
+     * Initialize the Vuforia localization engine.
+     */
     private void initVuforia() {
         /*
          * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
@@ -310,5 +217,110 @@ public class AutonomousCodeM2 extends LinearOpMode { // defines the function
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_GOLD_MINERAL, LABEL_SILVER_MINERAL);
+    }
+
+    private void turn(String direction, int TargetPosition){
+
+        FrontLeft.setTargetPosition(TargetPosition);
+
+        if(direction.equals(left) || direction.equals(Left)){
+            FrontLeft.setPower(-1);
+            FrontRight.setPower(1);
+            BackLeft.setPower(-1);
+            BackRight.setPower(1);
+            while (FrontLeft.getCurrentPosition() > FrontLeft.getTargetPosition()) {
+
+            }
+
+            FrontLeft.setPower(0);
+            FrontRight.setPower(0);
+            BackLeft.setPower(0);
+            BackRight.setPower(0);
+
+        }else if(direction.equals(right) || direction.equals(Right)){
+            FrontLeft.setPower(1);
+            FrontRight.setPower(-1);
+            BackLeft.setPower(1);
+            BackRight.setPower(-1);
+            while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
+
+            }
+
+            FrontLeft.setPower(0);
+            FrontRight.setPower(0);
+            BackLeft.setPower(0);
+            BackRight.setPower(0);
+        }
+    }
+
+    private void straight(int TargetPosition){
+
+
+
+        FrontLeft.setTargetPosition(TargetPosition);
+        FrontLeft.setPower(1);
+        FrontRight.setPower(.85);
+        BackLeft.setPower(1);
+        BackRight.setPower(.85);
+        while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
+
+        }
+
+        FrontLeft.setPower(0);
+        FrontRight.setPower(0);
+        BackLeft.setPower(0);
+        BackRight.setPower(0);
+    }
+
+    private void backwards(int TargetPosition){
+
+        FrontLeft.setTargetPosition(TargetPosition); //step 7: move towards crator and parks
+        FrontLeft.setPower(-1);
+        FrontRight.setPower(-.85);
+        BackLeft.setPower(-1);
+        BackRight.setPower(-.85);
+        while (FrontLeft.getCurrentPosition() > FrontLeft.getTargetPosition()) {
+
+        }
+
+        FrontLeft.setPower(0);
+        FrontRight.setPower(0);
+        BackLeft.setPower(0);
+        BackRight.setPower(0);
+    }
+
+    private void strafe(String direction, int TargetPosition){
+
+        if(direction.equals(left) || direction.equals(Left)){
+            FrontLeft.setTargetPosition(TargetPosition);
+            FrontLeft.setPower(-1);
+            FrontRight.setPower(.85);
+            BackLeft.setPower(1);
+            BackRight.setPower(-.85);
+            while (FrontLeft.getCurrentPosition() > FrontLeft.getTargetPosition()) {
+
+            }
+
+            FrontLeft.setPower(0);
+            FrontRight.setPower(0);
+            BackLeft.setPower(0);
+            BackRight.setPower(0);
+
+        }else if(direction.equals(right) || direction.equals(Right)){
+            FrontLeft.setTargetPosition(TargetPosition);
+
+            FrontLeft.setPower(1);
+            FrontRight.setPower(-.85);
+            BackLeft.setPower(-1);
+            BackRight.setPower(.85);
+            while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
+
+            }
+
+            FrontLeft.setPower(0);
+            FrontRight.setPower(0);
+            BackLeft.setPower(0);
+            BackRight.setPower(0);
+        }
     }
 }

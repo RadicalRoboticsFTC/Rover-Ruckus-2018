@@ -25,8 +25,10 @@ public class AutonomousCodeM2Old extends LinearOpMode { // defines the function
     private static DcMotor Arm;
     private static DcMotor Winch;
     private static Servo LeftMarker;
-    private static String left = "Left";
-    private static String right = "Right";
+    private static String Left = "Left";
+    private static String Right = "Right";
+    private static String left = "left";
+    private static String right = "right";
     private static DistanceSensor Dsense;
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
     private TFObjectDetector tfod;
@@ -169,40 +171,31 @@ public class AutonomousCodeM2Old extends LinearOpMode { // defines the function
         }
     }
 
-    private static void turn(String direction, int TargetPosition){
-        if(direction.equals(left)){
-            FrontLeft.setTargetPosition(TargetPosition);
+    private void turn(String direction, int TargetPosition){
+
+        FrontLeft.setTargetPosition(TargetPosition);
+
+        if(direction.equals(left) || direction.equals(Left)){
             FrontLeft.setPower(-1);
             FrontRight.setPower(1);
             BackLeft.setPower(-1);
             BackRight.setPower(1);
-            while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
-                /*if(Dsense < 30){
-                    FrontLeft.setPower(0);
-                    FrontRight.setPower(0);
-                    BackLeft.setPower(0);
-                    BackRight.setPower(0);
-                }*/
+            while (FrontLeft.getCurrentPosition() > FrontLeft.getTargetPosition()) {
+
             }
 
             FrontLeft.setPower(0);
             FrontRight.setPower(0);
             BackLeft.setPower(0);
             BackRight.setPower(0);
-        }
-        if(direction.equals(right)){
-            FrontLeft.setTargetPosition(TargetPosition);
+
+        }else if(direction.equals(right) || direction.equals(Right)){
             FrontLeft.setPower(1);
             FrontRight.setPower(-1);
             BackLeft.setPower(1);
             BackRight.setPower(-1);
             while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
-                /*if(Dsense < 30){
-                    FrontLeft.setPower(0);
-                    FrontRight.setPower(0);
-                    BackLeft.setPower(0);
-                    BackRight.setPower(0);
-                }*/
+
             }
 
             FrontLeft.setPower(0);
@@ -212,19 +205,17 @@ public class AutonomousCodeM2Old extends LinearOpMode { // defines the function
         }
     }
 
-    private static void straight(int TargetPosition){
+    private void straight(int TargetPosition){
+
+
+
         FrontLeft.setTargetPosition(TargetPosition);
         FrontLeft.setPower(1);
         FrontRight.setPower(.85);
         BackLeft.setPower(1);
         BackRight.setPower(.85);
         while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
-                /*if(Dsense < 30){
-                    FrontLeft.setPower(0);
-                    FrontRight.setPower(0);
-                    BackLeft.setPower(0);
-                    BackRight.setPower(0);
-                }*/
+
         }
 
         FrontLeft.setPower(0);
@@ -233,19 +224,15 @@ public class AutonomousCodeM2Old extends LinearOpMode { // defines the function
         BackRight.setPower(0);
     }
 
-    private static void backwards(int TargetPosition){
+    private void backwards(int TargetPosition){
+
         FrontLeft.setTargetPosition(TargetPosition); //step 7: move towards crator and parks
         FrontLeft.setPower(-1);
         FrontRight.setPower(-.85);
         BackLeft.setPower(-1);
         BackRight.setPower(-.85);
-        while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
-                /*if(Dsense < 30){
-                    FrontLeft.setPower(0);
-                    FrontRight.setPower(0);
-                    BackLeft.setPower(0);
-                    BackRight.setPower(0);
-                }*/
+        while (FrontLeft.getCurrentPosition() > FrontLeft.getTargetPosition()) {
+
         }
 
         FrontLeft.setPower(0);
@@ -254,40 +241,32 @@ public class AutonomousCodeM2Old extends LinearOpMode { // defines the function
         BackRight.setPower(0);
     }
 
-    private static void strafe(String direction, int TargetPosition){
-        if(direction.equals(left)){
+    private void strafe(String direction, int TargetPosition){
+
+        if(direction.equals(left) || direction.equals(Left)){
             FrontLeft.setTargetPosition(TargetPosition);
             FrontLeft.setPower(-1);
             FrontRight.setPower(.85);
             BackLeft.setPower(1);
             BackRight.setPower(-.85);
-            while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
-                /*if(Dsense < 30){
-                    FrontLeft.setPower(0);
-                    FrontRight.setPower(0);
-                    BackLeft.setPower(0);
-                    BackRight.setPower(0);
-                }*/
+            while (FrontLeft.getCurrentPosition() > FrontLeft.getTargetPosition()) {
+
             }
 
             FrontLeft.setPower(0);
             FrontRight.setPower(0);
             BackLeft.setPower(0);
             BackRight.setPower(0);
-        }
-        if(direction.equals(right)){
+
+        }else if(direction.equals(right) || direction.equals(Right)){
             FrontLeft.setTargetPosition(TargetPosition);
+
             FrontLeft.setPower(1);
             FrontRight.setPower(-.85);
             BackLeft.setPower(-1);
-            BackRight.setPower(-.85);
+            BackRight.setPower(.85);
             while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
-                /*if(Dsense < 30){
-                    FrontLeft.setPower(0);
-                    FrontRight.setPower(0);
-                    BackLeft.setPower(0);
-                    BackRight.setPower(0);
-                }*/
+
             }
 
             FrontLeft.setPower(0);
@@ -296,7 +275,6 @@ public class AutonomousCodeM2Old extends LinearOpMode { // defines the function
             BackRight.setPower(0);
         }
     }
-
 
 }
 

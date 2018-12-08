@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -14,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import java.util.List;
 
 @Autonomous
-public class AutonomousCodeM1 extends LinearOpMode { // defines the function
+public class AutonomousCodeCrater extends LinearOpMode { // defines the function
 
     private static DcMotor FrontRight; // defines variables to be used in the code
     private static DcMotor FrontLeft;
@@ -23,10 +22,8 @@ public class AutonomousCodeM1 extends LinearOpMode { // defines the function
     private static DcMotor Arm;
     private static DcMotor Winch;
     private static Servo LeftMarker;
-    private static String Left = "Left";
-    private static String Right = "Right";
-    private static String left = "left";
-    private static String right = "right";
+    private static String left = "Left";
+    private static String right = "Right";
 
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
@@ -89,7 +86,7 @@ public class AutonomousCodeM1 extends LinearOpMode { // defines the function
 
         turn("Left", 100);
 
-        strafe("Right", 150);
+        strafe("Right", 50);
 
         if (opModeIsActive()) {
             /** Activate Tensor Flow Object Detection. */
@@ -121,51 +118,25 @@ public class AutonomousCodeM1 extends LinearOpMode { // defines the function
                                 if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {//left
                                     straight(170);
 
-                                    turn("Left", -2100);
+                                    turn("Left", -1930);
 
-                                    straight(2650);
-
-                                    turn("right", -1800);
-
-                                    straight(-1500);
-
-                                    LeftMarker.setPosition(1);
-
-                                    backwards(5060);
+                                    straight(550);
 
                                     break;
                                 } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {//right
                                     straight(170);
 
-                                    turn("Left", -1400);
+                                    turn("Left", -1230);
 
-                                    straight(3250);
-
-                                    turn("left", -400);
-
-                                    straight(100);
-
-                                    backwards(-200);
-
-                                    turn("Left", -1895);
-
-                                    straight(4665);
+                                    straight(1850);
 
                                     break;
                                 } else { //center
                                     straight(170);
 
-                                    turn("Left", -1800);
+                                    turn("Left", -1630);
 
-                                    straight(2950);
-
-                                    LeftMarker.setPosition(1);
-
-                                    backwards(2650);
-
-                                    turn("Left", 955);
-
-                                    straight(7515);
+                                    straight(1150);
 
                                     break;
                                 }
@@ -181,16 +152,14 @@ public class AutonomousCodeM1 extends LinearOpMode { // defines the function
         }
     }
 
-    private void turn(String direction, int TargetPosition){
-
-        FrontLeft.setTargetPosition(TargetPosition);
-
-        if(direction.equals(left) || direction.equals(Left)){
+    private static void turn(String direction, int TargetPosition){
+        if(direction.equals(left)){
+            FrontLeft.setTargetPosition(TargetPosition);
             FrontLeft.setPower(-1);
             FrontRight.setPower(1);
             BackLeft.setPower(-1);
             BackRight.setPower(1);
-            while (FrontLeft.getCurrentPosition() > FrontLeft.getTargetPosition()) {
+            while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
 
             }
 
@@ -198,8 +167,9 @@ public class AutonomousCodeM1 extends LinearOpMode { // defines the function
             FrontRight.setPower(0);
             BackLeft.setPower(0);
             BackRight.setPower(0);
-
-        }else if(direction.equals(right) || direction.equals(Right)){
+        }
+        if(direction.equals(right)){
+            FrontLeft.setTargetPosition(TargetPosition);
             FrontLeft.setPower(1);
             FrontRight.setPower(-1);
             BackLeft.setPower(1);
@@ -215,10 +185,7 @@ public class AutonomousCodeM1 extends LinearOpMode { // defines the function
         }
     }
 
-    private void straight(int TargetPosition){
-
-
-
+    private static void straight(int TargetPosition){
         FrontLeft.setTargetPosition(TargetPosition);
         FrontLeft.setPower(1);
         FrontRight.setPower(.85);
@@ -234,14 +201,13 @@ public class AutonomousCodeM1 extends LinearOpMode { // defines the function
         BackRight.setPower(0);
     }
 
-    private void backwards(int TargetPosition){
-
+    private static void backwards(int TargetPosition){
         FrontLeft.setTargetPosition(TargetPosition); //step 7: move towards crator and parks
         FrontLeft.setPower(-1);
         FrontRight.setPower(-.85);
         BackLeft.setPower(-1);
         BackRight.setPower(-.85);
-        while (FrontLeft.getCurrentPosition() > FrontLeft.getTargetPosition()) {
+        while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
 
         }
 
@@ -251,15 +217,14 @@ public class AutonomousCodeM1 extends LinearOpMode { // defines the function
         BackRight.setPower(0);
     }
 
-    private void strafe(String direction, int TargetPosition){
-
-        if(direction.equals(left) || direction.equals(Left)){
+    private static void strafe(String direction, int TargetPosition){
+        if(direction.equals(left)){
             FrontLeft.setTargetPosition(TargetPosition);
             FrontLeft.setPower(-1);
             FrontRight.setPower(.85);
             BackLeft.setPower(1);
             BackRight.setPower(-.85);
-            while (FrontLeft.getCurrentPosition() > FrontLeft.getTargetPosition()) {
+            while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
 
             }
 
@@ -267,14 +232,13 @@ public class AutonomousCodeM1 extends LinearOpMode { // defines the function
             FrontRight.setPower(0);
             BackLeft.setPower(0);
             BackRight.setPower(0);
-
-        }else if(direction.equals(right) || direction.equals(Right)){
+        }
+        if(direction.equals(right)){
             FrontLeft.setTargetPosition(TargetPosition);
-
             FrontLeft.setPower(1);
             FrontRight.setPower(-.85);
             BackLeft.setPower(-1);
-            BackRight.setPower(.85);
+            BackRight.setPower(-.85);
             while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
 
             }

@@ -110,6 +110,28 @@ public class TensorFlowDetectionAuto extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
+        Arm.setTargetPosition(2100); //step 1: lands on field
+        Arm.setPower(.1);
+        Winch.setPower(1);
+        while (Arm.getCurrentPosition() < Arm.getTargetPosition()) {
+
+        }
+
+        Arm.setPower(0);
+        Winch.setPower(0);
+
+        sleep(500);
+
+        strafe("Right", 1050);
+
+        backwards(100);
+
+        //backwards(-10);
+
+        //turn("left", 50);
+
+        //turn("right", 25);
+
         if (opModeIsActive()) {
             /** Activate Tensor Flow Object Detection. */
             if (tfod != null) {
@@ -123,6 +145,10 @@ public class TensorFlowDetectionAuto extends LinearOpMode {
                     List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
                     if (updatedRecognitions != null) {
                       telemetry.addData("# Object Detected", updatedRecognitions.size());
+                      if (updatedRecognitions.size() != 3){
+                          turn("Right", 80);
+                          sleep(1000);
+                      }
                       if (updatedRecognitions.size() == 3) {
                         int goldMineralX = -1;
                         int silverMineral1X = -1;
@@ -136,20 +162,26 @@ public class TensorFlowDetectionAuto extends LinearOpMode {
                             silverMineral2X = (int) recognition.getLeft();
                           }
                         }
-                        sleep(2000);//to prolong detection and see if it becomes more accurate
+                        sleep(500);//to prolong detection and see if it becomes more accurate
                         if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
                           if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
                             telemetry.addData("Gold Mineral Position", "Left");
-                            sleep(1000);
-                            turn("left", 500);
+                            straight(170);
+
+                            sleep(500);
+
                           } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
                             telemetry.addData("Gold Mineral Position", "Right");
-                            sleep(1000);
-                            turn("right", 500);
+                              straight(170);
+
+                              sleep(500);
+
                           } else {
                             telemetry.addData("Gold Mineral Position", "Center");
-                            sleep(1000);
-                            straight(500);
+                              straight(170);
+
+                              sleep(500);
+
                           }
                         }
                       }
@@ -198,10 +230,10 @@ public class TensorFlowDetectionAuto extends LinearOpMode {
         FrontLeft.setTargetPosition(TargetPosition);
 
         if(direction.equals(left) || direction.equals(Left)){
-            FrontLeft.setPower(-1);
-            FrontRight.setPower(1);
-            BackLeft.setPower(-1);
-            BackRight.setPower(1);
+            FrontLeft.setPower(-.5);
+            FrontRight.setPower(.5);
+            BackLeft.setPower(-.5);
+            BackRight.setPower(.5);
             while (FrontLeft.getCurrentPosition() > FrontLeft.getTargetPosition()) {
 
             }
@@ -212,10 +244,10 @@ public class TensorFlowDetectionAuto extends LinearOpMode {
             BackRight.setPower(0);
 
         }else if(direction.equals(right) || direction.equals(Right)){
-            FrontLeft.setPower(1);
-            FrontRight.setPower(-1);
-            BackLeft.setPower(1);
-            BackRight.setPower(-1);
+            FrontLeft.setPower(.5);
+            FrontRight.setPower(-.5);
+            BackLeft.setPower(.5);
+            BackRight.setPower(-.5);
             while (FrontLeft.getCurrentPosition() < FrontLeft.getTargetPosition()) {
 
             }
@@ -249,10 +281,10 @@ public class TensorFlowDetectionAuto extends LinearOpMode {
     private void backwards(int TargetPosition){
 
         FrontLeft.setTargetPosition(TargetPosition); //step 7: move towards crator and parks
-        FrontLeft.setPower(-1);
-        FrontRight.setPower(-.85);
-        BackLeft.setPower(-1);
-        BackRight.setPower(-.85);
+        FrontLeft.setPower(-.5);
+        FrontRight.setPower(-.5);
+        BackLeft.setPower(-5);
+        BackRight.setPower(-.5);
         while (FrontLeft.getCurrentPosition() > FrontLeft.getTargetPosition()) {
 
         }

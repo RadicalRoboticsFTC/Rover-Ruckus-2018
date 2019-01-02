@@ -15,7 +15,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
 
-@TeleOp(name="Driver Control Advanced", group="Iterative Opmode")
+@TeleOp(name="Driver Control Advanced", group="Driver Control")
 public class DriverControlAdvanced extends OpMode { // this is where we start the function
     private DcMotor FrontRight; // this is where we define the variables
     private DcMotor FrontLeft;

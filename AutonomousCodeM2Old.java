@@ -1,5 +1,6 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.OldCode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -14,8 +15,8 @@ import java.util.List;
 
 import org.firstinspires.ftc.robotcore.internal.tfod.Timer;
 
-
-@Autonomous
+@Disabled
+@Autonomous(name="AutonomousCodeM2Old", group="Old")
 public class AutonomousCodeM2Old extends LinearOpMode { // defines the function
 
     private static DcMotor FrontRight; // defines variables to be used in the code

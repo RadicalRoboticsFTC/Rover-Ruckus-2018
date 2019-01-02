@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode; // this is where we import tools from other code
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.CRServoImplEx;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -18,7 +19,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Came
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
-@TeleOp(name="Driver Control", group="Iterative Opmode")
+@TeleOp(name="Driver Control", group="Driver Control")
 public class DriverControl extends OpMode { // this is where we start the function
     private DcMotor FrontRight; // this is where we define the variables
     private DcMotor FrontLeft;
@@ -26,6 +27,9 @@ public class DriverControl extends OpMode { // this is where we start the functi
     private DcMotor BackLeft;
     private DcMotor Arm;
     private DcMotor Winch;
+    private DcMotor ArmPivot;
+    private DcMotor WinchArm;
+    private Servo ArmServo;
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
     //private TFObjectDetector tfod;
     private static Servo LeftMarker;
@@ -49,6 +53,9 @@ public class DriverControl extends OpMode { // this is where we start the functi
         BackLeft = (DcMotor) hardwareMap.get("BackLeft");
         Arm = (DcMotor) hardwareMap.get("Arm");
         Winch = (DcMotor) hardwareMap.get("Winch");
+        ArmPivot = (DcMotor) hardwareMap.get("ArmPivot");
+        WinchArm = (DcMotor) hardwareMap.get("WinchArm");
+        ArmServo = (Servo) hardwareMap.get("ArmServo");
         LeftMarker = (Servo) hardwareMap.get("LeftMarker");
         Dsense = (DistanceSensor) hardwareMap.get("Dsense");
         //colorSensor = (ColorSensor) hardwareMap.get("Pha");
@@ -92,32 +99,54 @@ public class DriverControl extends OpMode { // this is where we start the functi
             Winch.setPower(1.0);
         }
 
-        if (!gamepad1.dpad_down) { // checks if where motor is where it needs to be
+        if (gamepad1.dpad_down == false) { // checks if where motor is where it needs to be
             Arm.setPower(0); // sets power the motor should turn
             Winch.setPower(0);
         } else {
             Arm.setPower(-.3); // sets power the motor should turn
             Winch.setPower(-1);
         }
-        if (gamepad1.dpad_left) {
-            Winch.setPower(-1);
-        } else {
+        if (gamepad1.dpad_left == false) {
             Winch.setPower(0);
+        } else {
+            Winch.setPower(-1);
         }
 
-        if (gamepad1.x) { // links controllers to commands the code should execute
-            LeftMarker.setPosition(1);
+        if (gamepad1.dpad_right == false) {
+            Winch.setPower(0);
+        } else {
+            Winch.setPower(1);
         }
-        if (gamepad1.b) { // links controllers to commands the code should execute
-            LeftMarker.setPosition(0);
+
+        if (gamepad1.x == false) { // links controllers to commands the code should execute
+            WinchArm.setPower(0);
+        }else{
+            WinchArm.setPower(1);
         }
-        if (gamepad1.a) { // links controllers to commands the code should execute
-            LeftMarker.setPosition(.7);
+        if (gamepad1.b == false) { // links controllers to commands the code should execute
+            WinchArm.setPower(0);
+        }else{
+            WinchArm.setPower(-1);
+        }
+        if (gamepad1.a == false) { // links controllers to commands the code should execute
+            ArmPivot.setPower(0);
+        }else{
+            ArmPivot.setPower(-1);
+        }
+        if (gamepad1.y == false) { // links controllers to commands the code should execute
+            ArmPivot.setPower(0);
+        }else{
+            ArmPivot.setPower(1);
         }
 
         if (gamepad1.right_bumper) { // links controllers to commands the code should execute
-        } else {
+            ArmServo.setPosition(1);
         }
+
+        if(gamepad1.left_bumper){
+            ArmServo.setPosition(0);
+        }
+
 
         if (gamepad1.left_bumper) { // links controllers to commands the code should execute
             power = .25;
@@ -138,8 +167,6 @@ public class DriverControl extends OpMode { // this is where we start the functi
         FrontLeft.setPower(fr);
         BackRight.setPower(br);
         BackLeft.setPower(bl);
-
-        //telemetry.addData("Distance Sensor", Dsense);
 
         /*List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
         if (updatedRecognitions != null) {

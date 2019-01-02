@@ -1,11 +1,13 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.OldCode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Autonomous
+@Disabled
+@Autonomous(name="AutonomousCodePaths3", group="Old")
 public class AutonomousCodePaths3 extends LinearOpMode { // defines the function
 
     private static DcMotor FrontRight; // defines variables to be used in the code
@@ -46,7 +48,7 @@ public class AutonomousCodePaths3 extends LinearOpMode { // defines the function
 
         LeftMarker.setPosition(.7);
 
-        Arm.setTargetPosition(2100); //step 1: lands on field
+        /*Arm.setTargetPosition(2100); //step 1: lands on field
         Arm.setPower(.1);
         Winch.setPower(1);
         while (Arm.getCurrentPosition() < Arm.getTargetPosition()) {
@@ -58,24 +60,36 @@ public class AutonomousCodePaths3 extends LinearOpMode { // defines the function
 
         strafe("Right", 1050);
 
-        straight(170);
+        straight(170);*/
 
-        /*turn("Left", -1630);
+        turn("Left", -1530);
 
-        straight(1150);
+        straight(4400);
 
-        LeftMarker.setPosition(1);
+        LeftMarker.setPosition(0);
 
-        backwards(-300);
+        backwards(-100);
 
-        turn("Left", 1695);
+        turn("Left", -1800);
 
-        straight(6560);*/
+        straight(1760);
+
+        sleep(500);
+
+        turn("Left", -300);
+
+        sleep(500);
+
+        straight(3000);
     }
 
     private void turn(String direction, int TargetPosition){
 
         FrontLeft.setTargetPosition(TargetPosition);
+
+        FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        sleep(50);
+        FrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         if(direction.equals(left) || direction.equals(Left)){
             FrontLeft.setPower(-1);
@@ -109,7 +123,9 @@ public class AutonomousCodePaths3 extends LinearOpMode { // defines the function
 
     private void straight(int TargetPosition){
 
-
+        FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        sleep(50);
+        FrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         FrontLeft.setTargetPosition(TargetPosition);
         FrontLeft.setPower(1);
@@ -128,6 +144,10 @@ public class AutonomousCodePaths3 extends LinearOpMode { // defines the function
 
     private void backwards(int TargetPosition){
 
+        FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        sleep(50);
+        FrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         FrontLeft.setTargetPosition(TargetPosition); //step 7: move towards crator and parks
         FrontLeft.setPower(-1);
         FrontRight.setPower(-.85);
@@ -144,6 +164,10 @@ public class AutonomousCodePaths3 extends LinearOpMode { // defines the function
     }
 
     private void strafe(String direction, int TargetPosition){
+
+        FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        sleep(50);
+        FrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         if(direction.equals(left) || direction.equals(Left)){
             FrontLeft.setTargetPosition(TargetPosition);

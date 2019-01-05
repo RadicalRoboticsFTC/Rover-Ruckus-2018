@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Backups;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -42,8 +42,8 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
 
-@Autonomous(name = "AutonomousCode2", group = "Autonomous")
-public class AutonomousCode2 extends LinearOpMode {
+@Autonomous(name = "AutonomousCodeBackup", group = "Backup")
+public class AutonomousCodeBackup extends LinearOpMode {
     private DcMotor FrontRight; // defines variables to be used in the code
     private DcMotor FrontLeft;
     private DcMotor BackRight;
@@ -95,19 +95,6 @@ public class AutonomousCode2 extends LinearOpMode {
         BackLeft.setDirection(DcMotor.Direction.REVERSE);
         Arm.setDirection(DcMotor.Direction.REVERSE);
 
-        // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
-        // first.
-        initVuforia();
-
-        if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
-            initTfod();
-        } else {
-            telemetry.addData("Sorry!", "This device is not compatible with TFOD");
-        }
-
-        /** Wait for the game to begin */
-        telemetry.addData(">", "Press Play to start tracking");
-        telemetry.update();
         waitForStart();
 
         LeftMarker.setPosition(.7);
@@ -126,166 +113,31 @@ public class AutonomousCode2 extends LinearOpMode {
 
         strafe("Right", 1050);
 
+        sleep(500);
+
+        straight(170);
+
+        sleep(500);
+
+        turn("Left", -1530);
+
+        straight(4400);
+
+        LeftMarker.setPosition(1);
+
         backwards(-100);
 
-        sleep(1000);
+        turn("Left", -1800);
 
-        if (opModeIsActive()) {
-            /** Activate Tensor Flow Object Detection. */
-            if (tfod != null) {
-                tfod.activate();
-            }
+        straight(1760);
 
-            while (opModeIsActive()) {
-                if (tfod != null) {
-                    // getUpdatedRecognitions() will return null if no new information is available since
-                    // the last time that call was made.
-                    List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-                    if (updatedRecognitions != null) {
-                      telemetry.addData("# Object Detected", updatedRecognitions.size());
-                      if (updatedRecognitions.size() != 3){
-                          faketurn("Right", 80);
-                          sleep(1000);
-                      }
-                      if (updatedRecognitions.size() == 3) {
-                        int goldMineralX = -1;
-                        int silverMineral1X = -1;
-                        int silverMineral2X = -1;
-                        for (Recognition recognition : updatedRecognitions) {
-                          if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
-                            goldMineralX = (int) recognition.getLeft();
-                          } else if (silverMineral1X == -1) {
-                            silverMineral1X = (int) recognition.getLeft();
-                          } else {
-                            silverMineral2X = (int) recognition.getLeft();
-                          }
-                        }
-                        sleep(500);//to prolong detection and see if it becomes more accurate
-                        if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
-                          if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {/**Left*/
-                              sleep(500);
+        sleep(500);
 
-                              straight(170);
+        turn("Left", -260);
 
-                              sleep(500);
+        sleep(500);
 
-                              turn("Left", -2200);
-
-                              straight(2000);
-
-                              sleep(500);
-
-                              backwards(-400);
-
-                              sleep(500);
-
-                              turn("Left", -1000);
-
-                              straight(2000);
-
-                              turn("Right", 700);
-
-                              straight(2000);
-
-                              sleep(500);
-
-                              turn("Left", -1100);
-
-                              sleep(500);
-
-                              straight(3000);
-
-                              LeftMarker.setPosition(1);
-
-                              backwards(-5500);
-
-                              break;
-
-                          } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {/**Right*/
-                              sleep(500);
-
-                              straight(170);
-
-                              sleep(500);
-
-                              turn("Left", -1600);
-
-                              straight(1400);
-
-                              sleep(500);
-
-                              backwards(-800);
-
-                              sleep(500);
-
-                              turn("Left", -1000);
-
-                              straight(2000);
-
-                              turn("Right", 700);
-
-                              straight(1000);
-
-                              sleep(500);
-
-                              turn("Left", -1375);
-
-                              sleep(500);
-
-                              straight(4000);
-
-                              LeftMarker.setPosition(1);
-
-                              backwards(-5600);
-
-                              break;
-
-                          } else {/**Middle*/
-                              sleep(500);
-
-                              straight(170);
-
-                              sleep(500);
-
-                              turn("Left", -1000);
-
-                              straight(1200);
-
-                              sleep(500);
-
-                              backwards(-800);
-
-                              sleep(500);
-
-                              turn("Left", -1300);
-
-                              straight(3600);
-
-                              sleep(500);
-
-                              turn("Left", -1275);
-
-                              sleep(500);
-
-                              straight(4000);
-
-                              LeftMarker.setPosition(1);
-
-                              backwards(-5600);
-
-                              break;
-                          }
-                        }
-                      }
-                      telemetry.update();
-                    }
-                }
-            }
-        }
-
-        if (tfod != null) {
-            tfod.shutdown();
-        }
+        straight(3200);
     }
 
     /**

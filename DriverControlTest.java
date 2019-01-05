@@ -188,7 +188,7 @@ public class DriverControlTest extends OpMode {
             power = 1;
         }
 
-        /*double gamepad1LeftY = gamepad1.left_stick_y * power;
+        double gamepad1LeftY = gamepad1.left_stick_y * power;
         double gamepad1LeftX = gamepad1.left_stick_x * power;
         double gamepad1RightX = gamepad1.right_stick_x * power;
 
@@ -200,43 +200,7 @@ public class DriverControlTest extends OpMode {
         FrontRight.setPower(fl);
         FrontLeft.setPower(fr);
         BackRight.setPower(br);
-        BackLeft.setPower(bl);*/
-
-        if(gamepad1.left_stick_x > .8){
-            FrontRight.setPower(1 * power);
-            FrontLeft.setPower(-1 * power);
-            BackRight.setPower(-1 * power);
-            BackLeft.setPower(1 * power);
-        }else if(gamepad1.left_stick_x < -.8){
-            FrontRight.setPower(-1 * power);
-            FrontLeft.setPower(1 * power);
-            BackRight.setPower(1 * power);
-            BackLeft.setPower(-1 * power);
-        }
-
-        if(gamepad1.left_stick_y > .8){
-            FrontRight.setPower(1 * power);
-            FrontLeft.setPower(1 * power);
-            BackRight.setPower(1 * power);
-            BackLeft.setPower(1 * power);
-        }else if(gamepad1.left_stick_y < -.8){
-            FrontRight.setPower(-1 * power);
-            FrontLeft.setPower(-1 * power);
-            BackRight.setPower(-1 * power);
-            BackLeft.setPower(-1 * power);
-        }
-        
-        if(gamepad1.right_stick_x > .8){
-            FrontRight.setPower(-1 * power);
-            FrontLeft.setPower(1 * power);
-            BackRight.setPower(-1 * power);
-            BackLeft.setPower(1 * power);
-        }else if(gamepad1.right_stick_x < -.8){
-            FrontRight.setPower(1 * power);
-            FrontLeft.setPower(-1 * power);
-            BackRight.setPower(1 * power);
-            BackLeft.setPower(-1 * power);
-        }
+        BackLeft.setPower(bl);
 
         /**End Drive Train*/
     }

@@ -42,7 +42,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
 
-@Autonomous(name = "AutonomousCode", group = "Contest Autonomous")
+@Autonomous(name = "AutonomousCode", group = "Autonomous")
 public class AutonomousCode extends LinearOpMode {
     private DcMotor FrontRight; // defines variables to be used in the code
     private DcMotor FrontLeft;

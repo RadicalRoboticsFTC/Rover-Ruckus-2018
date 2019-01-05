@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Backups;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -42,8 +42,8 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
 
-@Autonomous(name = "AutonomousCode2", group = "Autonomous")
-public class AutonomousCode2 extends LinearOpMode {
+@Autonomous(name = "AutonomousCode2Backup", group = "Backup")
+public class AutonomousCode2Backup extends LinearOpMode {
     private DcMotor FrontRight; // defines variables to be used in the code
     private DcMotor FrontLeft;
     private DcMotor BackRight;
@@ -130,163 +130,42 @@ public class AutonomousCode2 extends LinearOpMode {
 
         sleep(1000);
 
-        if (opModeIsActive()) {
-            /** Activate Tensor Flow Object Detection. */
-            if (tfod != null) {
-                tfod.activate();
-            }
+        straight(170);
 
-            while (opModeIsActive()) {
-                if (tfod != null) {
-                    // getUpdatedRecognitions() will return null if no new information is available since
-                    // the last time that call was made.
-                    List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-                    if (updatedRecognitions != null) {
-                      telemetry.addData("# Object Detected", updatedRecognitions.size());
-                      if (updatedRecognitions.size() != 3){
-                          faketurn("Right", 80);
-                          sleep(1000);
-                      }
-                      if (updatedRecognitions.size() == 3) {
-                        int goldMineralX = -1;
-                        int silverMineral1X = -1;
-                        int silverMineral2X = -1;
-                        for (Recognition recognition : updatedRecognitions) {
-                          if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
-                            goldMineralX = (int) recognition.getLeft();
-                          } else if (silverMineral1X == -1) {
-                            silverMineral1X = (int) recognition.getLeft();
-                          } else {
-                            silverMineral2X = (int) recognition.getLeft();
-                          }
-                        }
-                        sleep(500);//to prolong detection and see if it becomes more accurate
-                        if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
-                          if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {/**Left*/
-                              sleep(500);
+        sleep(500);
 
-                              straight(170);
+        turn("Left", -1600);
 
-                              sleep(500);
+        straight(1400);
 
-                              turn("Left", -2200);
+        sleep(500);
 
-                              straight(2000);
+        backwards(-800);
 
-                              sleep(500);
+        sleep(500);
 
-                              backwards(-400);
+        turn("Left", -1000);
 
-                              sleep(500);
+        straight(2000);
 
-                              turn("Left", -1000);
+        turn("Right", 700);
 
-                              straight(2000);
+        straight(1000);
 
-                              turn("Right", 700);
+        sleep(500);
 
-                              straight(2000);
+        turn("Left", -1375);
 
-                              sleep(500);
+        sleep(500);
 
-                              turn("Left", -1100);
+        straight(4000);
 
-                              sleep(500);
+        LeftMarker.setPosition(1);
 
-                              straight(3000);
-
-                              LeftMarker.setPosition(1);
-
-                              backwards(-5500);
-
-                              break;
-
-                          } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {/**Right*/
-                              sleep(500);
-
-                              straight(170);
-
-                              sleep(500);
-
-                              turn("Left", -1600);
-
-                              straight(1400);
-
-                              sleep(500);
-
-                              backwards(-800);
-
-                              sleep(500);
-
-                              turn("Left", -1000);
-
-                              straight(2000);
-
-                              turn("Right", 700);
-
-                              straight(1000);
-
-                              sleep(500);
-
-                              turn("Left", -1375);
-
-                              sleep(500);
-
-                              straight(4000);
-
-                              LeftMarker.setPosition(1);
-
-                              backwards(-5600);
-
-                              break;
-
-                          } else {/**Middle*/
-                              sleep(500);
-
-                              straight(170);
-
-                              sleep(500);
-
-                              turn("Left", -1000);
-
-                              straight(1200);
-
-                              sleep(500);
-
-                              backwards(-800);
-
-                              sleep(500);
-
-                              turn("Left", -1300);
-
-                              straight(3600);
-
-                              sleep(500);
-
-                              turn("Left", -1275);
-
-                              sleep(500);
-
-                              straight(4000);
-
-                              LeftMarker.setPosition(1);
-
-                              backwards(-5600);
-
-                              break;
-                          }
-                        }
-                      }
-                      telemetry.update();
-                    }
-                }
-            }
-        }
-
-        if (tfod != null) {
-            tfod.shutdown();
-        }
+        backwards(-5600);
     }
+
+
 
     /**
      * Initialize the Vuforia localization engine.

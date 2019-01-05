@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Backups;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -42,8 +42,8 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
 
-@Autonomous(name = "AutonomousCode2", group = "Autonomous")
-public class AutonomousCode2 extends LinearOpMode {
+@Autonomous(name = "AutonomousCode2Short", group = "Backup")
+public class AutonomousCode2Short extends LinearOpMode {
     private DcMotor FrontRight; // defines variables to be used in the code
     private DcMotor FrontLeft;
     private DcMotor BackRight;
@@ -173,32 +173,6 @@ public class AutonomousCode2 extends LinearOpMode {
 
                               straight(2000);
 
-                              sleep(500);
-
-                              backwards(-400);
-
-                              sleep(500);
-
-                              turn("Left", -1000);
-
-                              straight(2000);
-
-                              turn("Right", 700);
-
-                              straight(2000);
-
-                              sleep(500);
-
-                              turn("Left", -1100);
-
-                              sleep(500);
-
-                              straight(3000);
-
-                              LeftMarker.setPosition(1);
-
-                              backwards(-5500);
-
                               break;
 
                           } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {/**Right*/
@@ -212,34 +186,6 @@ public class AutonomousCode2 extends LinearOpMode {
 
                               straight(1400);
 
-                              sleep(500);
-
-                              backwards(-800);
-
-                              sleep(500);
-
-                              turn("Left", -1000);
-
-                              straight(2000);
-
-                              turn("Right", 700);
-
-                              straight(1000);
-
-                              sleep(500);
-
-                              turn("Left", -1375);
-
-                              sleep(500);
-
-                              straight(4000);
-
-                              LeftMarker.setPosition(1);
-
-                              backwards(-5600);
-
-                              break;
-
                           } else {/**Middle*/
                               sleep(500);
 
@@ -250,30 +196,6 @@ public class AutonomousCode2 extends LinearOpMode {
                               turn("Left", -1000);
 
                               straight(1200);
-
-                              sleep(500);
-
-                              backwards(-800);
-
-                              sleep(500);
-
-                              turn("Left", -1300);
-
-                              straight(3600);
-
-                              sleep(500);
-
-                              turn("Left", -1275);
-
-                              sleep(500);
-
-                              straight(4000);
-
-                              LeftMarker.setPosition(1);
-
-                              backwards(-5600);
-
-                              break;
                           }
                         }
                       }

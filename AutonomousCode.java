@@ -42,7 +42,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
 
-@Autonomous(name = "AutonomousCode", group = "Autonomous")
+@Autonomous(name = "AutonomousCode", group = "Contest Autonomous")
 public class AutonomousCode extends LinearOpMode {
     private DcMotor FrontRight; // defines variables to be used in the code
     private DcMotor FrontLeft;
@@ -110,7 +110,7 @@ public class AutonomousCode extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-        LeftMarker.setPosition(.7);
+        LeftMarker.setPosition(.3);
 
         Arm.setTargetPosition(2100); //step 1: lands on field
         Arm.setPower(.1);
@@ -141,7 +141,7 @@ public class AutonomousCode extends LinearOpMode {
                       telemetry.addData("# Object Detected", updatedRecognitions.size());
                       if (updatedRecognitions.size() != 3){
                           faketurn("Right", 80);
-                          sleep(2000);
+                          sleep(2500);
                       }
                       if (updatedRecognitions.size() == 3) {
                         int goldMineralX = -1;
@@ -161,32 +161,11 @@ public class AutonomousCode extends LinearOpMode {
                           if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {/**Left*/
                               sleep(500);
 
-                            straight(170);
-
-                            sleep(500);
-
-                            turn("Left", -2300);
-
-                            straight(3400);
-
-                            turn("right", 1400);
-
-                            straight(1800);
-
-                            LeftMarker.setPosition(1);
-
-                            backwards(-5460);
-
-                            break;
-
-                          } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {/**Right*/
-                              sleep(500);
-
                               straight(170);
 
                               sleep(500);
 
-                              turn("Left", -1000);
+                              turn("Left", -1200);
 
                               straight(3400);
 
@@ -194,11 +173,11 @@ public class AutonomousCode extends LinearOpMode {
 
                               straight(2250);
 
-                              LeftMarker.setPosition(1);
+                              LeftMarker.setPosition(0);
 
                               backwards(-100);
 
-                              turn("Left", -1400);
+                              /*turn("Left", -1400);
 
                               straight(1600);
 
@@ -208,9 +187,32 @@ public class AutonomousCode extends LinearOpMode {
 
                               sleep(500);
 
-                              straight(3600);
+                              straight(3600);*/
 
                               break;
+
+                          } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {/**Right*/
+                              sleep(500);
+
+                              straight(170);
+
+                              sleep(500);
+
+                              turn("Left", -2300);
+
+                              straight(3400);
+
+                              turn("right", 1000);
+
+                              straight(1800);
+
+                              LeftMarker.setPosition(0);
+
+                              backwards(-5460);
+
+                              break;
+
+
 
                           } else { /**Middle*/
                               sleep(500);
@@ -219,11 +221,11 @@ public class AutonomousCode extends LinearOpMode {
 
                               sleep(500);
 
-                              turn("Left", -1530);
+                              turn("Left", -1830);
 
                               straight(4400);
 
-                              LeftMarker.setPosition(1);
+                              LeftMarker.setPosition(0);
 
                               backwards(-100);
 
@@ -281,6 +283,7 @@ public class AutonomousCode extends LinearOpMode {
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_GOLD_MINERAL, LABEL_SILVER_MINERAL);
+        tfodParameters.minimumConfidence = .4;
     }
 
     private void faketurn(String direction, int TargetPosition){

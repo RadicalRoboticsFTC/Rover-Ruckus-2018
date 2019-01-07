@@ -112,7 +112,7 @@ public class TensorFlowDetectionAuto extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-        Arm.setTargetPosition(2100); //step 1: lands on field
+        /*Arm.setTargetPosition(2100); //step 1: lands on field
         Arm.setPower(.1);
         Winch.setPower(1);
         while (Arm.getCurrentPosition() < Arm.getTargetPosition()) {
@@ -132,7 +132,7 @@ public class TensorFlowDetectionAuto extends LinearOpMode {
 
         //turn("left", 50);
 
-        //turn("right", 25);
+        //turn("right", 25);*/
 
         if (opModeIsActive()) {
             /** Activate Tensor Flow Object Detection. */

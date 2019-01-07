@@ -130,10 +130,6 @@ public class AutonomousCode2ShortBackup extends LinearOpMode {
 
         sleep(1000);
 
-        straight(170);
-
-        sleep(500);
-
         turn("Left", -1600);
 
         straight(1400);

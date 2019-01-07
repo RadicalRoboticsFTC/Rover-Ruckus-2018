@@ -110,7 +110,7 @@ public class AutonomousCode2Backup extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-        LeftMarker.setPosition(.7);
+        LeftMarker.setPosition(.3);
 
         Arm.setTargetPosition(2100); //step 1: lands on field
         Arm.setPower(.1);
@@ -126,7 +126,7 @@ public class AutonomousCode2Backup extends LinearOpMode {
 
         strafe("Right", 1050);
 
-        backwards(-100);
+        //backwards(-100);
 
         sleep(1000);
 
@@ -160,7 +160,7 @@ public class AutonomousCode2Backup extends LinearOpMode {
 
         straight(4000);
 
-        LeftMarker.setPosition(1);
+        LeftMarker.setPosition(0);
 
         backwards(-5600);
     }

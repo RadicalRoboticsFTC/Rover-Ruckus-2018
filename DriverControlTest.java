@@ -202,6 +202,47 @@ public class DriverControlTest extends OpMode {
         BackRight.setPower(br);
         BackLeft.setPower(bl);
 
+        /*if(gamepad1.left_stick_x > .8){
+            FrontRight.setPower(1 * power);
+            FrontLeft.setPower(-1 * power);
+            BackRight.setPower(-1 * power);
+            BackLeft.setPower(1 * power);
+        }else if(gamepad1.left_stick_x < -.8){
+            FrontRight.setPower(-1 * power);
+            FrontLeft.setPower(1 * power);
+            BackRight.setPower(1 * power);
+            BackLeft.setPower(-1 * power);
+        }
+
+        if(gamepad1.left_stick_y > .8){
+            FrontRight.setPower(1 * power);
+            FrontLeft.setPower(1 * power);
+            BackRight.setPower(1 * power);
+            BackLeft.setPower(1 * power);
+        }else if(gamepad1.left_stick_y < -.8){
+            FrontRight.setPower(-1 * power);
+            FrontLeft.setPower(-1 * power);
+            BackRight.setPower(-1 * power);
+            BackLeft.setPower(-1 * power);
+        }
+        
+        if(gamepad1.right_stick_x > .8){
+            FrontRight.setPower(-1 * power);
+            FrontLeft.setPower(1 * power);
+            BackRight.setPower(-1 * power);
+            BackLeft.setPower(1 * power);
+        }else if(gamepad1.right_stick_x < -.8){
+            FrontRight.setPower(1 * power);
+            FrontLeft.setPower(-1 * power);
+            BackRight.setPower(1 * power);
+            BackLeft.setPower(-1 * power);
+        }
+
+        FrontRight.setPower(0);
+        FrontLeft.setPower(0);
+        BackRight.setPower(0);
+        BackLeft.setPower(0);*/
+
         /**End Drive Train*/
     }
 }

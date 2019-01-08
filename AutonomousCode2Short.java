@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode.Backups;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -42,6 +43,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
 
+@Disabled
 @Autonomous(name = "AutonomousCode2Short", group = "Backup")
 public class AutonomousCode2Short extends LinearOpMode {
     private DcMotor FrontRight; // defines variables to be used in the code

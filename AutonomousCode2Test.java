@@ -27,9 +27,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Old;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -42,8 +43,9 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
 
-@Autonomous(name = "AutonomousCode2", group = "Contest Autonomous")
-public class AutonomousCode2 extends LinearOpMode {
+@Autonomous(name = "AutonomousCode2Test", group = "Contest Autonomous")
+@Disabled
+public class AutonomousCode2Test extends LinearOpMode {
     private DcMotor FrontRight; // defines variables to be used in the code
     private DcMotor FrontLeft;
     private DcMotor BackRight;
@@ -57,7 +59,7 @@ public class AutonomousCode2 extends LinearOpMode {
     private static String right = "right";
 
     int other = 0;
-    int count = 0;
+    int count;
 
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
@@ -319,6 +321,7 @@ public class AutonomousCode2 extends LinearOpMode {
             sleep(500);
 
             turn("Left", -1350);
+            //HAHAHAHAHAHHAHAHA
 
             sleep(500);
 

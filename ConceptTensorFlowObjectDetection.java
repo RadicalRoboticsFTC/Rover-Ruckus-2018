@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Test;
+package org.firstinspires.ftc.teamcode.Old.Test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -52,7 +52,7 @@ import java.util.List;
  * is explained below.
  */
 
-
+@Disabled
 @TeleOp(name = "Concept: TensorFlow Object Detection", group = "Concept")
 ///@Disabled
 public class ConceptTensorFlowObjectDetection extends LinearOpMode {

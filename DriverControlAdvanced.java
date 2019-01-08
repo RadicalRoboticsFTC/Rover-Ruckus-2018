@@ -1,5 +1,6 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Old;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -16,6 +17,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import java.util.List;
 
 @TeleOp(name="Driver Control Advanced", group="Driver Control")
+@Disabled
 public class DriverControlAdvanced extends OpMode { // this is where we start the function
     private DcMotor FrontRight; // this is where we define the variables
     private DcMotor FrontLeft;
@@ -228,46 +230,7 @@ public class DriverControlAdvanced extends OpMode { // this is where we start th
         }
 
 
-        while (1==1){
-            if (tfod != null) {
-                // getUpdatedRecognitions() will return null if no new information is available since
-                // the last time that call was made.
-                List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-                if (updatedRecognitions != null) {
-                    telemetry.addData("# Object Detected", updatedRecognitions.size());
-                    if (updatedRecognitions.size() == 3) {
-                        int goldMineralX = -1;
-                        int silverMineral1X = -1;
-                        int silverMineral2X = -1;
-                        for (Recognition recognition : updatedRecognitions) {
-                            if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
-                                goldMineralX = (int) recognition.getLeft();
-                            } else if (silverMineral1X == -1) {
-                                silverMineral1X = (int) recognition.getLeft();
-                            } else {
-                                silverMineral2X = (int) recognition.getLeft();
-                            }
-                        }
-                        if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
-                            if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
-                                telemetry.addData("Gold Mineral Position", "Left");
-                            } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
-                                telemetry.addData("Gold Mineral'" +
-                                        "l Position", "Right");
-                            } else {
-                                telemetry.addData("Gold Mineral Position", "Center");
-                            }
-                        }
-                    }
-                    telemetry.update();
-                }
-            }
-        }
 
-
-        /*if (tfod != null) {
-            tfod.shutdown();
-        }*/
     }
 
 

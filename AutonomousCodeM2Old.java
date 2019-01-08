@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.OldCode;
+package org.firstinspires.ftc.teamcode.Old.OldCode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -10,10 +10,6 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
-
-
-
-import org.firstinspires.ftc.robotcore.internal.tfod.Timer;
 
 @Disabled
 @Autonomous(name="AutonomousCodeM2Old", group="Old")

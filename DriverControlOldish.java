@@ -1,15 +1,27 @@
-package org.firstinspires.ftc.teamcode.Old.OldCode;
+package org.firstinspires.ftc.teamcode.Old;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode; // this is where we import tools from other code
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.CRServoImplEx;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import java.util.List;
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
-@TeleOp(name="Driver Control Old", group="Driver Control")
+@TeleOp(name="Driver Control", group="Driver Control")
 @Disabled
-public class DriverControlOld extends OpMode { // this is where we start the function
+public class DriverControlOldish extends OpMode { // this is where we start the function
     private DcMotor FrontRight; // this is where we define the variables
     private DcMotor FrontLeft;
     private DcMotor BackRight;
@@ -109,21 +121,25 @@ public class DriverControlOld extends OpMode { // this is where we start the fun
 
         if (gamepad1.x == false) { // links controllers to commands the code should execute
             WinchArm.setPower(0);
+            LeftMarker.setPosition(.7);
         }else{
             WinchArm.setPower(1);
         }
         if (gamepad1.b == false) { // links controllers to commands the code should execute
             WinchArm.setPower(0);
+            LeftMarker.setPosition(.3);
         }else{
             WinchArm.setPower(-1);
         }
         if (gamepad1.a == false) { // links controllers to commands the code should execute
             ArmPivot.setPower(0);
+            LeftMarker.setPosition(0);
         }else{
             ArmPivot.setPower(-1);
         }
         if (gamepad1.y == false) { // links controllers to commands the code should execute
             ArmPivot.setPower(0);
+            LeftMarker.setPosition(1);
         }else{
             ArmPivot.setPower(1);
         }

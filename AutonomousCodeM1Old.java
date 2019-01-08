@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.OldCode;
+package org.firstinspires.ftc.teamcode.Old.OldCode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -7,10 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
-
-import java.util.List;
 
 @Disabled
 @Autonomous(name="AutonomousCodeM1Old", group="Old")

@@ -29,7 +29,8 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+/** Make this see 2 minerals and detect which is gold. */
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -51,9 +52,9 @@ import java.util.List;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@TeleOp(name = "Concept: TensorFlow Object Detection Webcam", group = "Concept")
+@TeleOp(name = "Concept: TensorFlow Object Detection Webcam Test", group = "Concept")
 
-public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
+public class ConceptTensorFlowObjectDetectionWebcamTest extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
     private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
@@ -116,27 +117,26 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
                     if (updatedRecognitions != null) {
                       telemetry.addData("# Object Detected", updatedRecognitions.size());
                       if (updatedRecognitions.size() == 2) {
-                        int goldMineralX = -1;
-                        int silverMineral1X = -1;
-                        int silverMineral2X = -1;
+                          int goldMineralX = -1;
+                          int silverMineral1X = -1;
+                          int silverMineral2X = -1;
+                          sleep(1000);
                           for (Recognition recognition : updatedRecognitions) {
                               if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
                                   goldMineralX = (int) recognition.getLeft();
-                              } else if (silverMineral1X == -1) {
+                              } else if (recognition.getLabel().equals(LABEL_SILVER_MINERAL)) {
                                   silverMineral1X = (int) recognition.getLeft();
-                              } else {
-                                  silverMineral2X = (int) recognition.getLeft();
                               }
                           }
-                          if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
-                              if (goldMineralX < silverMineral1X || goldMineralX < silverMineral2X) {
+                          sleep(500);
+                          if (goldMineralX == -1){
                                   telemetry.addData("Gold Mineral Position", "Left");
-                              } else if (goldMineralX > silverMineral1X || goldMineralX > silverMineral2X) {
-                                  telemetry.addData("Gold Mineral Position", "Right");
-                              } else {
-                                  telemetry.addData("Gold Mineral Position", "Center");
-                              }
+                          } else if (goldMineralX > silverMineral1X) {
+                              telemetry.addData("Gold Mineral Position", "Right");
+                          } else if (goldMineralX < silverMineral1X) {
+                              telemetry.addData("Gold Mineral Position", "Center");
                           }
+
                       }
                       telemetry.update();
                     }

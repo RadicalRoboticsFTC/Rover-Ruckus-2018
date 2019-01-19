@@ -131,6 +131,8 @@ public class AutonomousCode2 extends LinearOpMode {
 
         turn("Left", 300);
 
+
+
         if (opModeIsActive()) {
             /** Activate Tensor Flow Object Detection. */
             if (tfod != null) {

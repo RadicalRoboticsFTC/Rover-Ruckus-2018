@@ -14,7 +14,7 @@ public class DriverControl extends OpMode {
     private DcMotor Arm;
     private DcMotor Winch;
     private DcMotor ArmPivot;
-    private DcMotor WinchArm;
+    private DcMotor ArmChain;
     private Servo ArmServo;
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
     private static Servo LeftMarker;
@@ -30,6 +30,7 @@ public class DriverControl extends OpMode {
 
     double count = 0;
 
+    String position;
 
 
     @Override
@@ -41,7 +42,7 @@ public class DriverControl extends OpMode {
         Arm = (DcMotor) hardwareMap.get("Arm");
         Winch = (DcMotor) hardwareMap.get("Winch");
         ArmPivot = (DcMotor) hardwareMap.get("ArmPivot");
-        WinchArm = (DcMotor) hardwareMap.get("WinchArm");
+        ArmChain = (DcMotor) hardwareMap.get("ArmChain");
         ArmServo = (Servo) hardwareMap.get("ArmServo");
         LeftMarker = (Servo) hardwareMap.get("LeftMarker");
         //Dsense = (DistanceSensor) hardwareMap.get("Dsense");
@@ -56,11 +57,15 @@ public class DriverControl extends OpMode {
         FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Winch.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        ArmChain.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        ArmPivot.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
 
         FrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Winch.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
+        ArmChain.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        ArmPivot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     @Override
@@ -78,6 +83,8 @@ public class DriverControl extends OpMode {
         telemetry.addData("Arm Encoder", Arm.getCurrentPosition());
         telemetry.addData("Winch Encoder", Winch.getCurrentPosition());
         telemetry.addData("Winch System count", count);
+        telemetry.addData("WinchArm Encoder", ArmChain.getCurrentPosition());
+        telemetry.addData("ArmPivot Encoder", ArmPivot.getCurrentPosition());
 
         count = 0;
 
@@ -133,47 +140,81 @@ public class DriverControl extends OpMode {
         /**Mineral System*/
 
         if (!gamepad1.x) {
-            WinchArm.setPower(0);
-        }else{
-            WinchArm.setPower(1);
+            ArmServo.setPosition(1);
+
+        }if (!gamepad1.y) {
+            ArmServo.setPosition(0);
         }
 
-        if (!gamepad1.b) {
-            WinchArm.setPower(0);
+        /*if (!gamepad1.b) { // extends arm to gather minerals from folded position
+            ArmChain.setPower(0);
+            ArmPivot.setPower(0);
+            ArmServo.setPosition(1);
         }else{
-            WinchArm.setPower(-1);
+            ArmChain.setPower(-.7);
+            ArmPivot.setPower(-.85);
+            ArmServo.setPosition(0);
+        }*/
+
+        /*if (!gamepad1.a) { // folds the chain arm back in
+            ArmChain.setPower(0);
+            ArmPivot.setPower(0);
+            ArmServo.setPosition(0);
+        }else{
+            ArmChain.setPower(.6);
+            ArmPivot.setPower(1);
+            ArmServo.setPosition(1);
+        }*/
+
+        while(gamepad1.a){
+            ArmPivot.setTargetPosition(-100);
+            ArmChain.setPower(.05);
+            ArmPivot.setPower(1);
+            ArmServo.setPosition(1);
+            while(ArmPivot.getCurrentPosition() < ArmPivot.getTargetPosition()){
+
+            }
+            ArmChain.setPower(0);
+            ArmPivot.setPower(0);
+            ArmServo.setPosition(0);
         }
 
-        if (!gamepad1.a) {
+        while(gamepad1.b){
+            ArmPivot.setTargetPosition(-1918);
+            ArmChain.setPower(-.7);
+            ArmPivot.setPower(-.85);
+            ArmServo.setPosition(0);
+            while(ArmPivot.getCurrentPosition() > ArmPivot.getTargetPosition()){
+
+            }
+            ArmChain.setPower(0);
+            ArmPivot.setPower(0);
+            ArmServo.setPosition(0);
+        }
+        /*while() {
+            WinchArm.setPower(.6);
+            ArmPivot.setPower(.8);
+            ArmServo.setPosition(1);
+            if(!gamepad1.a){
+                break;
+            }
+        }*/
+        if (!gamepad1.right_bumper) { // extends arm to gather minerals from folded position
             ArmPivot.setPower(0);
         }else{
             ArmPivot.setPower(-1);
         }
 
-        if (!gamepad1.y) {
-            ArmPivot.setPower(0);
+        if (gamepad1.right_trigger > .8) { //moves to put up the minerals in the lander
+            ArmPivot.setPower(1);
         }else{
-            ArmPivot.setPower(1);
+            ArmPivot.setPower(0);
         }
 
-        if (gamepad1.right_bumper) {
-            ArmServo.setPosition(1);
-        }
-
-        if(gamepad1.left_bumper){
-            ArmServo.setPosition(0);
-        }
-
-        if(gamepad1.right_trigger == 1){
-            ArmPivot.setPower(1);
-
-            ArmServo.setPosition(count);
-
-            count  = count + .001;
-        }
-
-        if(gamepad1.right_trigger > .5){ // to test count and triggers
-            count  = count + .001;
+        if (gamepad1.left_trigger > .8) {
+            ArmChain.setPower(.6);
+        }else{
+            ArmChain.setPower(0);
         }
 
         /**End Mineral System*/

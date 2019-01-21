@@ -90,7 +90,7 @@ public class DriverControl extends OpMode {
 
         /**Latching System*/
 
-        while(gamepad1.dpad_up/*&& count < 1*/){
+        /*while(gamepad1.dpad_up/*&& count < 1){
             Arm.setPower(.1);
             Winch.setPower(1);
 
@@ -102,7 +102,7 @@ public class DriverControl extends OpMode {
             Winch.setPower(0);
         }
 
-        while(gamepad1.dpad_down/*&& count < 1*/){
+        while(gamepad1.dpad_down/*&& count < 1){
             Arm.setPower(-.1);
             Winch.setPower(-1);
 
@@ -114,7 +114,7 @@ public class DriverControl extends OpMode {
             Winch.setPower(0);
         }
 
-        while (gamepad1.dpad_left /*&& count < 1*/){
+        while (gamepad1.dpad_left /*&& count < 1){
             Winch.setPower(-1);
 
             count++;
@@ -124,13 +124,29 @@ public class DriverControl extends OpMode {
             Winch.setPower(0);
         }
 
-        while (gamepad1.dpad_right/*&& count < 1*/){
+        while (gamepad1.dpad_right/*&& count < 1){
             Winch.setPower(1);
 
             count++;
         }
 
         if (!gamepad1.dpad_right) {
+            Winch.setPower(0);
+        }*/
+
+
+        if(gamepad1.dpad_right){
+            Winch.setPower(1);
+        }else if(gamepad1.dpad_left){
+            Winch.setPower(-1);
+        }else if(gamepad1.dpad_up){
+            Arm.setPower(.1);
+            Winch.setPower(1);
+        }else if(gamepad1.dpad_down){
+            Arm.setPower(-.1);
+            Winch.setPower(-1);
+        }else{
+            Arm.setPower(0);
             Winch.setPower(0);
         }
 
@@ -139,12 +155,12 @@ public class DriverControl extends OpMode {
 
         /**Mineral System*/
 
-        if (!gamepad1.x) {
+        /*if (!gamepad1.x) {
             ArmServo.setPosition(1);
 
         }if (!gamepad1.y) {
             ArmServo.setPosition(0);
-        }
+        }*/
 
         /*if (!gamepad1.b) { // extends arm to gather minerals from folded position
             ArmChain.setPower(0);
@@ -166,7 +182,7 @@ public class DriverControl extends OpMode {
             ArmServo.setPosition(1);
         }*/
 
-        while(gamepad1.a){
+        /*while(gamepad1.a){
             ArmPivot.setTargetPosition(-100);
             ArmChain.setPower(.05);
             ArmPivot.setPower(1);
@@ -190,7 +206,7 @@ public class DriverControl extends OpMode {
             ArmChain.setPower(0);
             ArmPivot.setPower(0);
             ArmServo.setPosition(0);
-        }
+        }*/
         /*while() {
             WinchArm.setPower(.6);
             ArmPivot.setPower(.8);
@@ -199,7 +215,7 @@ public class DriverControl extends OpMode {
                 break;
             }
         }*/
-        if (!gamepad1.right_bumper) { // extends arm to gather minerals from folded position
+        /*if (!gamepad1.right_bumper) { // extends arm to gather minerals from folded position
             ArmPivot.setPower(0);
         }else{
             ArmPivot.setPower(-1);
@@ -215,6 +231,31 @@ public class DriverControl extends OpMode {
             ArmChain.setPower(.6);
         }else{
             ArmChain.setPower(0);
+        }*/
+
+        if(gamepad1.right_trigger > .8){
+            ArmPivot.setPower(1);
+        }else if(gamepad1.left_trigger > .8){
+            ArmChain.setPower(.6);
+        }else if(gamepad1.a){
+            ArmPivot.setTargetPosition(-100);
+            if(ArmPivot.getCurrentPosition() < ArmPivot.getTargetPosition()) {
+                ArmChain.setPower(.2);
+                ArmPivot.setPower(.8);
+                ArmServo.setPosition(1);
+            }
+        }else if(gamepad1.b){
+            ArmPivot.setTargetPosition(-1918);
+            if(ArmPivot.getCurrentPosition() > ArmPivot.getTargetPosition()) {
+                ArmChain.setPower(-.2);
+                ArmPivot.setPower(-.65);
+                ArmServo.setPosition(0);
+            }
+        }else if(gamepad1.right_bumper){
+            ArmPivot.setPower(-1);
+        }else{
+            ArmChain.setPower(0);
+            ArmPivot.setPower(0);
         }
 
         /**End Mineral System*/

@@ -168,14 +168,14 @@ public class Webcam extends LinearOpMode {
                             if (goldMineralX == -1){
                                 telemetry.addData("Gold Mineral Position", "Left");
                                 Arm.setTargetPosition(180); //step 1: lands on field
-                              Arm.setPower(.1);
-                              Winch.setPower(1);
-                              while (Arm.getCurrentPosition() < Arm.getTargetPosition()) {
+                                Arm.setPower(.1);
+                                Winch.setPower(1);
+                                while (Arm.getCurrentPosition() < Arm.getTargetPosition()) {
 
-                              }
+                                }
 
-                              Arm.setPower(0);
-                              Winch.setPower(0);
+                                Arm.setPower(0);
+                                Winch.setPower(0);
                                 strafe("Right", 1350);
 
                                 sleep(500);
@@ -202,17 +202,15 @@ public class Webcam extends LinearOpMode {
 
                             } else if (goldMineralX > silverMineral1X) {
                                 telemetry.addData("Gold Mineral Position", "Right");
-                               Arm.setTargetPosition(180); //step 1: lands on field
-                              Arm.setPower(.1);
-                              Winch.setPower(1);
-                              while (Arm.getCurrentPosition() < Arm.getTargetPosition()) {
+                                Arm.setTargetPosition(180); //step 1: lands on field
+                                Arm.setPower(.1);
+                                Winch.setPower(1);
+                                while (Arm.getCurrentPosition() < Arm.getTargetPosition()) {
 
-                              }
+                                }
 
-                              Arm.setPower(0);
-                              Winch.setPower(0);
-
-
+                                Arm.setPower(0);
+                                Winch.setPower(0);
 
                                 strafe("Right", 1350);
 
@@ -239,15 +237,15 @@ public class Webcam extends LinearOpMode {
                                 break;
                             } else if (goldMineralX < silverMineral1X) {
                                 telemetry.addData("Gold Mineral Position", "Center");
-                               Arm.setTargetPosition(195); //step 1: lands on field
-                              Arm.setPower(.1);
-                              Winch.setPower(1);
-                              while (Arm.getCurrentPosition() < Arm.getTargetPosition()) {
+                                Arm.setTargetPosition(195); //step 1: lands on field
+                                Arm.setPower(.1);
+                                Winch.setPower(1);
+                                while (Arm.getCurrentPosition() < Arm.getTargetPosition()) {
 
-                              }
+                                }
 
-                              Arm.setPower(0);
-                              Winch.setPower(0);
+                                Arm.setPower(0);
+                                Winch.setPower(0);
 
                                 strafe("Right", 1550);
 

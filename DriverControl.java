@@ -1,12 +1,22 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+//import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
 @TeleOp(name="Driver Control", group="Tests")
-public class DriverControl extends OpMode {
+public class DriverControl extends OpMode  {
     private DcMotor FrontRight;
     private DcMotor FrontLeft;
     private DcMotor BackRight;
@@ -15,9 +25,12 @@ public class DriverControl extends OpMode {
     private DcMotor Winch;
     private DcMotor ArmPivot;
     private DcMotor ArmChain;
-    private Servo ArmServo;
+    //private CRServo ArmServo;//The extender to the Minearal intake
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
     private static Servo LeftMarker;
+    private CRServo IntakeServo; // spins intake
+    private Servo TrayServo; // mineral holder currently doesn't need to move
+    //private CRServo ElementIntakeServo;
     //private static DistanceSensor Dsense;
     //private ColorSensor colorSensor;
 
@@ -33,6 +46,7 @@ public class DriverControl extends OpMode {
     String position;
 
 
+
     @Override
     public void init() {
         FrontRight = (DcMotor) hardwareMap.get("FrontRight");
@@ -43,28 +57,30 @@ public class DriverControl extends OpMode {
         Winch = (DcMotor) hardwareMap.get("Winch");
         ArmPivot = (DcMotor) hardwareMap.get("ArmPivot");
         ArmChain = (DcMotor) hardwareMap.get("ArmChain");
-        ArmServo = (Servo) hardwareMap.get("ArmServo");
+        //ArmServo = (CRServo) hardwareMap.get("ArmServo");
         LeftMarker = (Servo) hardwareMap.get("LeftMarker");
-        //Dsense = (DistanceSensor) hardwareMap.get("Dsense");
-        //colorSensor = (ColorSensor) hardwareMap.get("Pha");
+        IntakeServo = (CRServo) hardwareMap.get("IntakeServo");
+        TrayServo = (Servo) hardwareMap.get("TrayServo");
+        //ElementIntakeServo = (CRServo) hardwareMap.get("ElementIntakeServo");
 
         FrontRight.setDirection(DcMotor.Direction.REVERSE);
         //FrontLeft.setDirection(DcMotor.Direction.REVERSE);
         BackRight.setDirection(DcMotor.Direction.REVERSE);
         //BackLeft.setDirection(DcMotor.Direction.REVERSE);
         Arm.setDirection(DcMotor.Direction.REVERSE);
+        ArmPivot.setDirection(DcMotor.Direction.REVERSE);
 
         FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Winch.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        ArmChain.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //Winch.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //ArmChain.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         ArmPivot.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
         FrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Winch.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        ArmChain.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //Winch.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //ArmChain.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         ArmPivot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
@@ -81,9 +97,9 @@ public class DriverControl extends OpMode {
     public void loop(){
         telemetry.addData("FrontLeft Encoder", FrontLeft.getCurrentPosition());
         telemetry.addData("Arm Encoder", Arm.getCurrentPosition());
-        telemetry.addData("Winch Encoder", Winch.getCurrentPosition());
-        telemetry.addData("Winch System count", count);
-        telemetry.addData("WinchArm Encoder", ArmChain.getCurrentPosition());
+        //telemetry.addData("Winch Encoder", Winch.getCurrentPosition());
+        //telemetry.addData("Winch System count", count);
+        //telemetry.addData("WinchArm Encoder", ArmChain.getCurrentPosition());
         telemetry.addData("ArmPivot Encoder", ArmPivot.getCurrentPosition());
 
         count = 0;
@@ -107,14 +123,97 @@ public class DriverControl extends OpMode {
 
         /**End Latching System*/
 
-
         /**Mineral System*/
 
-        if (!gamepad1.x) {
-            ArmServo.setPosition(1);
+        //IntakeServo.setPower(1);
 
-        }if (!gamepad1.y) {
-            ArmServo.setPosition(0);
+        if(gamepad1.x){
+            ArmPivot.setTargetPosition(750);
+            while(ArmPivot.getCurrentPosition() < ArmPivot.getTargetPosition()) {
+                ArmPivot.setPower(.15);
+            /* ArmChain.getTargetPosition(?);
+                if(ArmChain.getCurrentPosition() > ?? && ArmChain.getCurrentPosition() < ArmChain.getTargetPosition()){
+                    ArmChain.setPower(-.2);
+                }*/
+                if(gamepad1.start){
+                    break;
+                }
+            }
+        }else if(gamepad1.b) {
+            ArmPivot.setTargetPosition(0);
+            while(ArmPivot.getCurrentPosition() > ArmPivot.getTargetPosition()) {
+                ArmChain.setPower(-.06);
+                ArmPivot.setPower(-.15);
+                /* ArmChain.getTargetPosition(?);
+                if(ArmChain.getCurrentPosition() > ?? && ArmChain.getCurrentPosition() < ArmChain.getTargetPosition()){
+                    ArmChain.setPower(.2);
+                }*/
+                if(gamepad1.start){
+                    break;
+                }
+            }
+        } else if(gamepad1.a){
+            ArmPivot.setTargetPosition(700);
+            while(ArmPivot.getCurrentPosition() < ArmPivot.getTargetPosition()) {
+                ArmChain.setPower(.03);
+                ArmPivot.setPower(.15);
+                 /* ArmChain.getTargetPosition(?);
+                if(ArmChain.getCurrentPosition() > ?? && ArmChain.getCurrentPosition() < ArmChain.getTargetPosition()){
+                    ArmChain.setPower();
+             }*/
+                 if(gamepad1.start){
+                     break;
+                 }
+            }
+
+        } else if(gamepad1.y){
+            ArmPivot.setTargetPosition(100);
+            while(ArmPivot.getCurrentPosition() > ArmPivot.getTargetPosition()) {
+                ArmChain.setPower(-.2);
+                ArmPivot.setPower(-.15);
+                /* ArmChain.getTargetPosition(?);
+                if(ArmChain.getCurrentPosition() > ?? && ArmChain.getCurrentPosition() < ArmChain.getTargetPosition()){
+                    ArmChain.setPower();
+                }*/
+                if(gamepad1.start){
+                    break;
+                }
+            }
+
+        }else{
+            ArmPivot.setPower(0);
+            ArmChain.setPower(0);
+        }
+
+        /*if(gamepad1.x){
+            ArmPivot.setPower(-0.5);
+            ArmChain.setPower(0.8);
+        }else{
+            ArmPivot.setPower(0);
+            ArmChain.setPower(0);
+        }
+        if(!gamepad1.a){
+            ArmServo.setPower(1);
+        }else{
+            ArmServo.setPower(0);
+        }
+        if(!gamepad1.b){
+            ArmServo.setPower(1);
+        }else{
+            ArmServo.setPower(0);
+        }
+        if(gamepad1.y){
+            TrayServo.setPosition(1);
+        }else{
+            TrayServo.setPosition(0);
+        }*/
+
+        /*if (!gamepad1.x) {
+            ElementIntakeServo.setPower(1);
+
+        }
+        if (!gamepad1.y) {
+            ArmServo.setPower(0);
         }
 
         if(gamepad1.right_trigger > .8){
@@ -129,21 +228,21 @@ public class DriverControl extends OpMode {
             if(ArmPivot.getCurrentPosition() < ArmPivot.getTargetPosition()) {
                 ArmChain.setPower(.03);
                 ArmPivot.setPower(.5);
-                ArmServo.setPosition(1);
+                ArmServo.setPower(1);
             }
         }else if(gamepad1.b){
             ArmPivot.setTargetPosition(-1650);
             if(ArmPivot.getCurrentPosition() > ArmPivot.getTargetPosition()) {
                 ArmChain.setPower(-.095);
                 ArmPivot.setPower(-.95);
-                ArmServo.setPosition(0);
+                ArmServo.setPower(0);
             }
         }else if(gamepad1.right_bumper){
             ArmPivot.setPower(-1);
         }else{
             ArmChain.setPower(0);
             ArmPivot.setPower(0);
-        }
+        }*/
 
         /**End Mineral System*/
 
@@ -169,47 +268,6 @@ public class DriverControl extends OpMode {
         FrontLeft.setPower(fr);
         BackRight.setPower(br);
         BackLeft.setPower(bl);
-
-        /*if(gamepad1.left_stick_x > .8){
-            FrontRight.setPower(1 * power);
-            FrontLeft.setPower(-1 * power);
-            BackRight.setPower(-1 * power);
-            BackLeft.setPower(1 * power);
-        }else if(gamepad1.left_stick_x < -.8){
-            FrontRight.setPower(-1 * power);
-            FrontLeft.setPower(1 * power);
-            BackRight.setPower(1 * power);
-            BackLeft.setPower(-1 * power);
-        }
-
-        if(gamepad1.left_stick_y > .8){
-            FrontRight.setPower(1 * power);
-            FrontLeft.setPower(1 * power);
-            BackRight.setPower(1 * power);
-            BackLeft.setPower(1 * power);
-        }else if(gamepad1.left_stick_y < -.8){
-            FrontRight.setPower(-1 * power);
-            FrontLeft.setPower(-1 * power);
-            BackRight.setPower(-1 * power);
-            BackLeft.setPower(-1 * power);
-        }
-        
-        if(gamepad1.right_stick_x > .8){
-            FrontRight.setPower(-1 * power);
-            FrontLeft.setPower(1 * power);
-            BackRight.setPower(-1 * power);
-            BackLeft.setPower(1 * power);
-        }else if(gamepad1.right_stick_x < -.8){
-            FrontRight.setPower(1 * power);
-            FrontLeft.setPower(-1 * power);
-            BackRight.setPower(1 * power);
-            BackLeft.setPower(-1 * power);
-        }
-
-        FrontRight.setPower(0);
-        FrontLeft.setPower(0);
-        BackRight.setPower(0);
-        BackLeft.setPower(0);*/
 
         /**End Drive Train*/
     }

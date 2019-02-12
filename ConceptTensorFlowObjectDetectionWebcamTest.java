@@ -27,10 +27,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.OldCode;
 
 /** Make this see 2 minerals and detect which is gold. */
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -52,6 +53,7 @@ import java.util.List;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
+@Disabled
 @TeleOp(name = "Concept: TensorFlow Object Detection Webcam Test", group = "Concept")
 
 public class ConceptTensorFlowObjectDetectionWebcamTest extends LinearOpMode {

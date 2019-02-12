@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Old;
+package org.firstinspires.ftc.teamcode.OldCode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode; // this is where we import tools from other code
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;

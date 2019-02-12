@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Old.OldCode;
+package org.firstinspires.ftc.teamcode.OldCode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous; // imports tool from other code
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;

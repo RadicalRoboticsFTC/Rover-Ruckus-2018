@@ -34,6 +34,7 @@ public class DriverControl extends OpMode  {
     //private static DistanceSensor Dsense;
     //private ColorSensor colorSensor;
     int other = 0;
+    int other2 = 0;
 
     double fr;
     double fl;
@@ -127,12 +128,39 @@ public class DriverControl extends OpMode  {
         /**End Latching System*/
 
         /**Mineral System*/
+        if(gamepad1.a){
+            other = 0;
+            other2 = 0;
+            while(other ==0 || other2 == 0){
+                if( ArmPivot.getCurrentPosition()<450){
+                    ArmPivot.setPower(.2);
+                }else{
+                    other = 1;
+                    ArmPivot.setPower(0);
+                }
+
+                if(ArmChain.getCurrentPosition()>-700 && ArmPivot.getCurrentPosition() > 200){
+                    ArmChain.setPower(-.4);
+                }else{
+                    other2 = 1;
+                    ArmChain.setPower(0);
+                }
+
+                if(gamepad1.start){
+                    break;
+                }
+            }
+            ArmPivot.setPower(.04);
+        }else{
+            ArmChain.setPower(0);
+            ArmPivot.setPower(0);
+        }
 
         //IntakeServo.setPower(1);
 
-        if(gamepad1.x){
+        /*if(gamepad1.x){
             ArmPivot.setTargetPosition(850);
-            while(ArmPivot.getCurrentPosition() < ArmPivot.getTargetPosition() && ArmChain.getCurrentPosition() ? ??) {
+            while(ArmPivot.getCurrentPosition() < ArmPivot.getTargetPosition()) {
                 if(ArmPivot.getCurrentPosition() > 650){
                     ArmPivot.setPower(.075);
                 }
@@ -141,14 +169,20 @@ public class DriverControl extends OpMode  {
                 /* ArmChain.getTargetPosition(?);
                 if(ArmChain.getCurrentPosition() > ?? && ArmChain.getCurrentPosition() < ArmChain.getTargetPosition()){
                     ArmChain.setPower(-.2);
-                }*/
+                }
                 if(gamepad1.start){
                     break;
                 }
             }
+            while(ArmChain.getCurrentPosition() > -500){
+                ArmChain.setPower(-.3);
+            }
+            while(ArmChain.getCurrentPosition() < -600){
+                ArmChain.setPower(.3);
+            }
         }else if(gamepad1.b) {
             ArmPivot.setTargetPosition(500);
-            while(ArmPivot.getCurrentPosition() < ArmPivot.getTargetPosition() && ArmChain.getCurrentPosition() ? ??){
+            while(ArmPivot.getCurrentPosition() < ArmPivot.getTargetPosition() || ArmChain.getCurrentPosition() < 50){
                 ArmPivot.setPower(.2);
                 ArmChain.setPower(-.15);
 
@@ -158,9 +192,9 @@ public class DriverControl extends OpMode  {
             }
 
             ArmPivot.setTargetPosition(0);
-            while(ArmPivot.getCurrentPosition() > ArmPivot.getTargetPosition() && ArmChain.getCurrentPosition() ? ??) {
+            while(ArmPivot.getCurrentPosition() > ArmPivot.getTargetPosition()) {
                 ArmChain.setPower(-.06);
-                ArmPivot.setPower(-.15);
+                //ArmPivot.setPower(-.15);
 
                 if(gamepad1.start){
                     break;
@@ -171,8 +205,8 @@ public class DriverControl extends OpMode  {
                 }
             }
         } else if(gamepad1.a){
-            ArmPivot.setTargetPosition(500);
-            while(ArmPivot.getCurrentPosition() < ArmPivot.getTargetPosition() && ArmChain.getCurrentPosition() ? ??) {
+            //ArmPivot.setTargetPosition(500);
+            while(ArmPivot.getCurrentPosition() < 500 || ArmChain.getCurrentPosition() > -741) {
                 if(ArmPivot.getCurrentPosition() < 300){
                     //ArmChain.setPower(.2);
                     ArmChain.setPower(0);
@@ -192,20 +226,20 @@ public class DriverControl extends OpMode  {
 
         } else if(gamepad1.y){
             ArmPivot.setTargetPosition(400);
-            while(ArmPivot.getCurrentPosition() > ArmPivot.getTargetPosition() && ArmChain.getCurrentPosition() ? ??) {
+            while(ArmPivot.getCurrentPosition() > ArmPivot.getTargetPosition() || ArmChain.getCurrentPosition() < -741) {
                 ArmChain.setPower(-.2);
                 ArmPivot.setPower(-.15);
                 /* ArmChain.getTargetPosition(?);
                 if(ArmChain.getCurrentPosition() > ?? && ArmChain.getCurrentPosition() < ArmChain.getTargetPosition()){
                     ArmChain.setPower();
-                }*/
+                }
                 if(gamepad1.start){
                     break;
                 }
 
                 /*if(ArmPivot.getCurrentPosition() < 300){
                     ArmChain.setPower(-.2);
-                }*/
+                }
             }
 
         }else{

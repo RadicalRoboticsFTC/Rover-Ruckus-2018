@@ -35,6 +35,8 @@ public class DriverControl extends OpMode  {
     //private ColorSensor colorSensor;
     int other = 0;
     int other2 = 0;
+    int other3 = 0;
+    int other4 = 0;
 
     double fr;
     double fl;
@@ -131,15 +133,20 @@ public class DriverControl extends OpMode  {
         if(gamepad1.a){
             other = 0;
             other2 = 0;
-            while(other ==0 || other2 == 0){
+            other3 = 0;
+            other4 = 0;
+            while((other ==0 || other2 == 0) && ArmChain.getCurrentPosition() > -600){
                 if( ArmPivot.getCurrentPosition()<450){
-                    ArmPivot.setPower(.2);
+                    ArmPivot.setPower(.35);
+                    if(ArmPivot.getCurrentPosition() > 300){
+                        ArmPivot.setPower(.2);
+                    }
                 }else{
                     other = 1;
                     ArmPivot.setPower(0);
                 }
 
-                if(ArmChain.getCurrentPosition()>-700 && ArmPivot.getCurrentPosition() > 200){
+                if(ArmChain.getCurrentPosition()>-650 && ArmPivot.getCurrentPosition() > 250){
                     ArmChain.setPower(-.4);
                 }else{
                     other2 = 1;
@@ -150,7 +157,114 @@ public class DriverControl extends OpMode  {
                     break;
                 }
             }
-            ArmPivot.setPower(.04);
+            if(ArmPivot.getCurrentPosition()< 300){
+            ArmPivot.setPower(.2);
+            }
+        }else if(gamepad1.b){
+            other = 0;
+            other2 = 0;
+            other3 = 0;
+            other4 = 0;
+            while(other == 0 /*|| other2 == 0*/){
+                if(ArmPivot.getCurrentPosition() > 0){
+                    if(ArmPivot.getCurrentPosition() < 600 && other3 == 0){
+                        ArmPivot.setPower(.2);
+                    }else{
+                        ArmPivot.setPower(0);
+                        other3 = 1;
+                    }
+                    //ArmPivot.setPower(-.2);
+                    if(ArmPivot.getCurrentPosition() < 200 && other4 == 0 && other3 == 1){
+                        ArmPivot.setPower(.075);
+                        if(ArmPivot.getCurrentPosition() < 250){
+                            other4 = 1;
+                        }
+                    }else if(other4 == 1){
+                        ArmPivot.setPower(0);
+                    }
+                }else{
+                    other = 1;
+                    ArmPivot.setPower(0);
+                }
+                if(other3 == 1){
+                    ArmChain.setPower(.35);
+                }else if(ArmPivot.getCurrentPosition() < 200){
+                    ArmChain.setPower(0);
+                }else if(ArmChain.getCurrentPosition() < 150){
+                    ArmChain.setPower(0);
+                    other2 = 1;
+                }
+                if(gamepad1.start){
+                     break;
+                }
+            }
+        }else if(gamepad1.x){
+            other = 0;
+            other2 = 0;
+            other3 = 0;
+            other4 = 0;
+            while(other == 0||other2 == 0){
+                if(ArmPivot.getCurrentPosition() < 650){
+                    ArmPivot.setPower(.2);
+                }else if(ArmPivot.getCurrentPosition() > 650 && ArmPivot.getCurrentPosition() < 750){
+                    ArmPivot.setPower(.05);
+                }else{
+                    other = 1;
+                    ArmPivot.setPower(0);
+                }
+
+                if(ArmChain.getCurrentPosition() < -600 || ArmChain.getCurrentPosition() > -500){
+                    if(ArmChain.getCurrentPosition() < -650) {
+                        ArmChain.setPower(.2);
+                    }else if (ArmChain.getCurrentPosition() < -625) {
+                        ArmChain.setPower(.075);
+                    }else if(ArmChain.getCurrentPosition() < -575){
+                        ArmChain.setPower(-.025);
+                    }else if(ArmChain.getCurrentPosition() > -510){
+                        ArmChain.setPower(-.18);
+                    /*}else if(ArmChain.getCurrentPosition() > -500) {
+                        ArmChain.setPower(-.125);*/
+                    }else if(ArmChain.getCurrentPosition() > -450) {
+                        ArmChain.setPower(-.55);
+                    }
+                }else{
+                    other2 = 1;
+                    ArmChain.setPower(0);
+                }
+
+                if(gamepad1.start){
+                    break;
+                }
+            }
+        }else if(gamepad1.y){
+            other = 0;
+            other2 = 0;
+            other3 = 0;
+            other4 = 0;
+            while(other == 0 || other2 == 0){
+                if(ArmPivot.getCurrentPosition() > 750){
+                    ArmPivot.setPower(-.15);
+                }else if(ArmPivot.getCurrentPosition() < 750 && ArmPivot.getCurrentPosition() > 650){
+                    ArmPivot.setPower(-.075);
+                }else if(ArmPivot.getCurrentPosition() <= 650 && other4 == 0){
+                    ArmPivot.setPower(.075);
+                }else{
+                    other = 1;
+                }
+
+                if(ArmChain.getCurrentPosition() < -700){
+                    ArmChain.setPower(-.1);
+                }else{
+                    other2 = 1;
+                }
+
+                if(gamepad1.start){
+                    break;
+                }
+            }
+            if(ArmPivot.getCurrentPosition()< 300){
+                ArmPivot.setPower(.2);
+            }
         }else{
             ArmChain.setPower(0);
             ArmPivot.setPower(0);

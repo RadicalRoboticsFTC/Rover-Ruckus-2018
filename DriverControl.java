@@ -50,7 +50,6 @@ public class DriverControl extends OpMode  {
     String position;
 
 
-
     @Override
     public void init() {
         FrontRight = (DcMotor) hardwareMap.get("FrontRight");
@@ -102,7 +101,7 @@ public class DriverControl extends OpMode  {
     public void loop(){
         telemetry.addData("FrontLeft Encoder", FrontLeft.getCurrentPosition());
         telemetry.addData("Arm Encoder", Arm.getCurrentPosition());
-        //telemetry.addData("Winch Encoder", Winch.getCurrentPosition());
+        telemetry.addData("Winch Encoder", Winch.getCurrentPosition());
         //telemetry.addData("Winch System count", count);
         //telemetry.addData("WinchArm Encoder", ArmChain.getCurrentPosition());
         telemetry.addData("ArmPivot Encoder", ArmPivot.getCurrentPosition());
@@ -146,7 +145,7 @@ public class DriverControl extends OpMode  {
                     ArmPivot.setPower(0);
                 }
 
-                if(ArmChain.getCurrentPosition()>-650 && ArmPivot.getCurrentPosition() > 250){
+                if(ArmChain.getCurrentPosition()>-600 && ArmPivot.getCurrentPosition() > 250){
                     ArmChain.setPower(-.4);
                 }else{
                     other2 = 1;
@@ -243,9 +242,9 @@ public class DriverControl extends OpMode  {
             other4 = 0;
             while(other == 0 || other2 == 0){
                 if(ArmPivot.getCurrentPosition() > 750){
-                    ArmPivot.setPower(-.15);
+                    ArmPivot.setPower(-.12);
                 }else if(ArmPivot.getCurrentPosition() < 750 && ArmPivot.getCurrentPosition() > 650){
-                    ArmPivot.setPower(-.075);
+                    ArmPivot.setPower(-.025);
                 }else if(ArmPivot.getCurrentPosition() <= 650 && other4 == 0){
                     ArmPivot.setPower(.075);
                 }else{
@@ -265,160 +264,18 @@ public class DriverControl extends OpMode  {
             if(ArmPivot.getCurrentPosition()< 300){
                 ArmPivot.setPower(.2);
             }
+        }else if(gamepad2.dpad_up){
+            ArmPivot.setPower(.4);
+        }else if(gamepad2.dpad_down) {
+            ArmPivot.setPower(-.4);
+        }else if(gamepad2.y){
+                ArmChain.setPower(.4);
+        }else if(gamepad2.a){
+            ArmChain.setPower(-.4);
         }else{
             ArmChain.setPower(0);
             ArmPivot.setPower(0);
         }
-
-        //IntakeServo.setPower(1);
-
-        /*if(gamepad1.x){
-            ArmPivot.setTargetPosition(850);
-            while(ArmPivot.getCurrentPosition() < ArmPivot.getTargetPosition()) {
-                if(ArmPivot.getCurrentPosition() > 650){
-                    ArmPivot.setPower(.075);
-                }
-                ArmPivot.setPower(.15);
-                ArmChain.setPower(.075);
-                /* ArmChain.getTargetPosition(?);
-                if(ArmChain.getCurrentPosition() > ?? && ArmChain.getCurrentPosition() < ArmChain.getTargetPosition()){
-                    ArmChain.setPower(-.2);
-                }
-                if(gamepad1.start){
-                    break;
-                }
-            }
-            while(ArmChain.getCurrentPosition() > -500){
-                ArmChain.setPower(-.3);
-            }
-            while(ArmChain.getCurrentPosition() < -600){
-                ArmChain.setPower(.3);
-            }
-        }else if(gamepad1.b) {
-            ArmPivot.setTargetPosition(500);
-            while(ArmPivot.getCurrentPosition() < ArmPivot.getTargetPosition() || ArmChain.getCurrentPosition() < 50){
-                ArmPivot.setPower(.2);
-                ArmChain.setPower(-.15);
-
-                if(gamepad1.start){
-                    break;
-                }
-            }
-
-            ArmPivot.setTargetPosition(0);
-            while(ArmPivot.getCurrentPosition() > ArmPivot.getTargetPosition()) {
-                ArmChain.setPower(-.06);
-                //ArmPivot.setPower(-.15);
-
-                if(gamepad1.start){
-                    break;
-                }
-
-                if(ArmPivot.getCurrentPosition() < 100){
-                    ArmPivot.setPower(-.075);
-                }
-            }
-        } else if(gamepad1.a){
-            //ArmPivot.setTargetPosition(500);
-            while(ArmPivot.getCurrentPosition() < 500 || ArmChain.getCurrentPosition() > -741) {
-                if(ArmPivot.getCurrentPosition() < 300){
-                    //ArmChain.setPower(.2);
-                    ArmChain.setPower(0);
-                    other = 1;
-                }
-
-                ArmPivot.setPower(.075);
-
-                if(other == 1 && ArmChain.getCurrentPosition() < 300){
-                    ArmChain.setPower(-.4);
-                }
-
-                 if(gamepad1.start){
-                     break;
-                 }
-            }
-
-        } else if(gamepad1.y){
-            ArmPivot.setTargetPosition(400);
-            while(ArmPivot.getCurrentPosition() > ArmPivot.getTargetPosition() || ArmChain.getCurrentPosition() < -741) {
-                ArmChain.setPower(-.2);
-                ArmPivot.setPower(-.15);
-                /* ArmChain.getTargetPosition(?);
-                if(ArmChain.getCurrentPosition() > ?? && ArmChain.getCurrentPosition() < ArmChain.getTargetPosition()){
-                    ArmChain.setPower();
-                }
-                if(gamepad1.start){
-                    break;
-                }
-
-                /*if(ArmPivot.getCurrentPosition() < 300){
-                    ArmChain.setPower(-.2);
-                }
-            }
-
-        }else{
-            ArmPivot.setPower(0);
-            ArmChain.setPower(0);
-        }
-
-        /*if(gamepad1.x){
-            ArmPivot.setPower(-0.5);
-            ArmChain.setPower(0.8);
-        }else{
-            ArmPivot.setPower(0);
-            ArmChain.setPower(0);
-        }
-        if(!gamepad1.a){
-            ArmServo.setPower(1);
-        }else{
-            ArmServo.setPower(0);
-        }
-        if(!gamepad1.b){
-            ArmServo.setPower(1);
-        }else{
-            ArmServo.setPower(0);
-        }
-        if(gamepad1.y){
-            TrayServo.setPosition(1);
-        }else{
-            TrayServo.setPosition(0);
-        }*/
-
-        /*if (!gamepad1.x) {
-            ElementIntakeServo.setPower(1);
-
-        }
-        if (!gamepad1.y) {
-            ArmServo.setPower(0);
-        }
-
-        if(gamepad1.right_trigger > .8){
-            ArmPivot.setTargetPosition(-300);
-            if(ArmPivot.getCurrentPosition() < ArmPivot.getTargetPosition()) {
-                ArmPivot.setPower(.4);
-            }
-        }else if(gamepad1.left_trigger > .8){
-            ArmChain.setPower(.05);
-        }else if(gamepad1.a){
-            ArmPivot.setTargetPosition(-295);
-            if(ArmPivot.getCurrentPosition() < ArmPivot.getTargetPosition()) {
-                ArmChain.setPower(.03);
-                ArmPivot.setPower(.5);
-                ArmServo.setPower(1);
-            }
-        }else if(gamepad1.b){
-            ArmPivot.setTargetPosition(-1650);
-            if(ArmPivot.getCurrentPosition() > ArmPivot.getTargetPosition()) {
-                ArmChain.setPower(-.095);
-                ArmPivot.setPower(-.95);
-                ArmServo.setPower(0);
-            }
-        }else if(gamepad1.right_bumper){
-            ArmPivot.setPower(-1);
-        }else{
-            ArmChain.setPower(0);
-            ArmPivot.setPower(0);
-        }*/
 
         /**End Mineral System*/
 

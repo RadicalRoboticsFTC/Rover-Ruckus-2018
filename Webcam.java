@@ -167,10 +167,10 @@ public class Webcam extends LinearOpMode {
                             sleep(500);
                             if (goldMineralX == -1){
                                 telemetry.addData("Gold Mineral Position", "Left");
-                                Arm.setTargetPosition(180); //step 1: lands on field
+                                Arm.setTargetPosition(-39000); //step 1: lands on field (arm value is the winch)
                                 Arm.setPower(.1);
                                 Winch.setPower(1);
-                                while (Arm.getCurrentPosition() < Arm.getTargetPosition()) {
+                                while (Arm.getCurrentPosition() > Arm.getTargetPosition()) {
 
                                 }
 
@@ -202,10 +202,10 @@ public class Webcam extends LinearOpMode {
 
                             } else if (goldMineralX > silverMineral1X) {
                                 telemetry.addData("Gold Mineral Position", "Right");
-                                Arm.setTargetPosition(180); //step 1: lands on field
+                                Arm.setTargetPosition(-39000); //step 1: lands on field (arm value is the winch)
                                 Arm.setPower(.1);
                                 Winch.setPower(1);
-                                while (Arm.getCurrentPosition() < Arm.getTargetPosition()) {
+                                while (Arm.getCurrentPosition() > Arm.getTargetPosition()) {
 
                                 }
 
@@ -237,10 +237,10 @@ public class Webcam extends LinearOpMode {
                                 break;
                             } else if (goldMineralX < silverMineral1X) {
                                 telemetry.addData("Gold Mineral Position", "Center");
-                                Arm.setTargetPosition(195); //step 1: lands on field
+                                Arm.setTargetPosition(-39000); //step 1: lands on field (arm value is the winch)
                                 Arm.setPower(.1);
                                 Winch.setPower(1);
-                                while (Arm.getCurrentPosition() < Arm.getTargetPosition()) {
+                                while (Arm.getCurrentPosition() > Arm.getTargetPosition()) {
 
                                 }
 

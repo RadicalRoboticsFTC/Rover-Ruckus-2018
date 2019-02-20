@@ -34,7 +34,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-//import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -67,7 +67,7 @@ public class Webcam extends LinearOpMode {
     private DcMotor BackLeft;
     private DcMotor Arm;
     private DcMotor Winch;
-   //private Servo LeftMarker;
+    private Servo LeftMarker;
     private static String Left = "Left";
     private static String Right = "Right";
     private static String left = "left";
@@ -108,7 +108,7 @@ public class Webcam extends LinearOpMode {
         BackLeft = (DcMotor) hardwareMap.get("BackLeft");
         Arm = (DcMotor) hardwareMap.get("Arm");
         Winch = (DcMotor) hardwareMap.get("Winch");
-        //LeftMarker = (Servo) hardwareMap.get("LeftMarker");
+        LeftMarker = (Servo) hardwareMap.get("LeftMarker");
 
         FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -167,7 +167,8 @@ public class Webcam extends LinearOpMode {
                             sleep(500);
                             if (goldMineralX == -1){
                                 telemetry.addData("Gold Mineral Position", "Left");
-                                Arm.setTargetPosition(-39000); //step 1: lands on field (arm value is the winch)
+                                telemetry.update();
+                                Arm.setTargetPosition(-35000); //step 1: lands on field (arm value is the winch)
                                 Arm.setPower(.1);
                                 Winch.setPower(1);
                                 while (Arm.getCurrentPosition() > Arm.getTargetPosition()) {
@@ -178,11 +179,11 @@ public class Webcam extends LinearOpMode {
                                 Winch.setPower(0);
                                 strafe("Right", 1350);
 
-                                sleep(500);
+                                sleep(350);
 
                                 straight(170);
 
-                                sleep(500);
+                                sleep(350);
 
                                 turn("Left", -2300);
 
@@ -192,7 +193,7 @@ public class Webcam extends LinearOpMode {
 
                                 straight(1800);
 
-                               // LeftMarker.setPosition(0);
+                                LeftMarker.setPosition(0);
 
                                 backwards(-5460);
 
@@ -202,7 +203,8 @@ public class Webcam extends LinearOpMode {
 
                             } else if (goldMineralX > silverMineral1X) {
                                 telemetry.addData("Gold Mineral Position", "Right");
-                                Arm.setTargetPosition(-39000); //step 1: lands on field (arm value is the winch)
+                                telemetry.update();
+                                Arm.setTargetPosition(-35000); //step 1: lands on field (arm value is the winch)
                                 Arm.setPower(.1);
                                 Winch.setPower(1);
                                 while (Arm.getCurrentPosition() > Arm.getTargetPosition()) {
@@ -218,7 +220,7 @@ public class Webcam extends LinearOpMode {
 
                                 straight(170);
 
-                                sleep(500);
+                                sleep(350);
 
                                 turn("Left", -1200);
 
@@ -228,7 +230,7 @@ public class Webcam extends LinearOpMode {
 
                                 straight(2250);
 
-                               // LeftMarker.setPosition(0);
+                                LeftMarker.setPosition(0);
 
                                 backwards(-100);
 
@@ -237,7 +239,8 @@ public class Webcam extends LinearOpMode {
                                 break;
                             } else if (goldMineralX < silverMineral1X) {
                                 telemetry.addData("Gold Mineral Position", "Center");
-                                Arm.setTargetPosition(-39000); //step 1: lands on field (arm value is the winch)
+                                telemetry.update();
+                                Arm.setTargetPosition(-35000); //step 1: lands on field (arm value is the winch)
                                 Arm.setPower(.1);
                                 Winch.setPower(1);
                                 while (Arm.getCurrentPosition() > Arm.getTargetPosition()) {
@@ -253,13 +256,13 @@ public class Webcam extends LinearOpMode {
 
                                 straight(170);
 
-                                sleep(650);
+                                sleep(350);
 
                                 turn("Left", -1830);
 
                                 straight(4400);
 
-                               // LeftMarker.setPosition(0);
+                                LeftMarker.setPosition(0);
 
                                 backwards(-100);
 
@@ -267,11 +270,11 @@ public class Webcam extends LinearOpMode {
 
                                 straight(1760);
 
-                                sleep(500);
+                                sleep(350);
 
                                 turn("Left", -260);
 
-                                sleep(500);
+                                sleep(350);
 
                                 straight(3200);
 
@@ -298,13 +301,13 @@ public class Webcam extends LinearOpMode {
             Arm.setPower(0);
             Winch.setPower(0);*/
 
-            strafe("Right", 1050);
+            //strafe("Right", 1050);
 
-            sleep(500);
+            sleep(350);
 
             straight(170);
 
-            sleep(500);
+            sleep(350);
 
             turn("Left", -2300);
 
@@ -314,7 +317,7 @@ public class Webcam extends LinearOpMode {
 
             straight(1800);
 
-           // LeftMarker.setPosition(0);
+            LeftMarker.setPosition(0);
 
             backwards(-5460);
         }

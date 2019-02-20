@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-//import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -38,7 +38,7 @@ public class WebcamTest extends LinearOpMode {
     private DcMotor BackLeft;
     private DcMotor Arm;
     private DcMotor Winch;
-    //private Servo LeftMarker;
+    private Servo LeftMarker;
     private static String Left = "Left";
     private static String Right = "Right";
     private static String left = "left";
@@ -79,7 +79,7 @@ public class WebcamTest extends LinearOpMode {
         BackLeft = (DcMotor) hardwareMap.get("BackLeft");
         Arm = (DcMotor) hardwareMap.get("Arm");
         Winch = (DcMotor) hardwareMap.get("Winch");
-        //LeftMarker = (Servo) hardwareMap.get("LeftMarker");
+        LeftMarker = (Servo) hardwareMap.get("LeftMarker");
 
         FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -149,21 +149,21 @@ public class WebcamTest extends LinearOpMode {
                                 Winch.setPower(0);
                                 strafe("Right", 1350);
 
-                                sleep(500);
+                                sleep(350);
 
                                 straight(170);
 
-                                sleep(500);
+                                sleep(350);
 
                                 turn("Left", -2200);
 
                                 straight(2000);
 
-                                sleep(500);
+                                sleep(350);
 
                                 backwards(-400);
 
-                                sleep(500);
+                                sleep(350);
 
                                 turn("Left", -1000);
 
@@ -173,15 +173,15 @@ public class WebcamTest extends LinearOpMode {
 
                                 straight(2000);
 
-                                sleep(500);
+                                sleep(350);
 
                                 turn("Left", -1550);
 
-                                sleep(500);
+                                sleep(350);
 
                                 straight(3000);
 
-                               // LeftMarker.setPosition(0);
+                                LeftMarker.setPosition(0);
 
                                 backwards(-5500);
 
@@ -202,37 +202,37 @@ public class WebcamTest extends LinearOpMode {
                                 Arm.setPower(0);
                                 Winch.setPower(0);
 
-                                strafe("Right", 1350);
+                                //strafe("Right", 1350);
 
-                                sleep(500);
+                                //sleep(350);
 
                                 straight(170);
 
-                                sleep(500);
+                                sleep(350);
 
                                 turn("Left", -1000);
 
                                 straight(1400);
 
-                                sleep(500);
+                                sleep(350);
 
                                 backwards(-1000);
 
-                                sleep(500);
+                                sleep(350);
 
                                 turn("Left", -1300);
 
                                 straight(3600);
 
-                                sleep(500);
+                                sleep(350);
 
                                 turn("Left", -1175);
 
-                                sleep(500);
+                                sleep(350);
 
                                 straight(4000);
 
-                                //LeftMarker.setPosition(0);
+                                LeftMarker.setPosition(0);
 
                                 backwards(-5600);
 
@@ -251,23 +251,23 @@ public class WebcamTest extends LinearOpMode {
                                 Arm.setPower(0);
                                 Winch.setPower(0);
 
-                                strafe("Right", 1550);
+                               // strafe("Right", 1550);
 
-                                sleep(650);
+                                //sleep(650);
 
                                 straight(170);
 
-                                sleep(650);
+                                sleep(400);
 
                                 turn("Left", -1600);
 
                                 straight(1400);
 
-                                sleep(500);
+                                sleep(350);
 
                                 backwards(-800);
 
-                                sleep(500);
+                                sleep(350);
 
                                 turn("Left", -1000);
 
@@ -277,15 +277,15 @@ public class WebcamTest extends LinearOpMode {
 
                                 straight(1000);
 
-                                sleep(500);
+                                sleep(350);
 
                                 turn("Left", -1500);
 
-                                sleep(500);
+                                sleep(350);
 
                                 straight(4000);
 
-                               // LeftMarker.setPosition(0);
+                                LeftMarker.setPosition(0);
 
                                 backwards(-5600);
 
@@ -312,25 +312,42 @@ public class WebcamTest extends LinearOpMode {
             Arm.setPower(0);
             Winch.setPower(0);*/
 
-            strafe("Right", 1050);
+            //strafe("Right", 1050);
 
-            sleep(500);
+            //sleep(350);
 
             straight(170);
 
-            sleep(500);
+            sleep(350);
+            turn("Left", -2200);
 
-            turn("Left", -2300);
+            straight(2000);
 
-            straight(3400);
+            sleep(350);
 
-            turn("right", 1000);
+            backwards(-400);
 
-            straight(1800);
+            sleep(350);
 
-            // LeftMarker.setPosition(0);
+            turn("Left", -1000);
 
-            backwards(-5460);
+            straight(2000);
+
+            turn("Right", 1000);
+
+            straight(2000);
+
+            sleep(350);
+
+            turn("Left", -1350);
+
+            sleep(350);
+
+            straight(3600);
+
+            LeftMarker.setPosition(0);
+
+            backwards(-5500);
         }
 
         if (tfod != null) {
